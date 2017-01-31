@@ -1,0 +1,20 @@
+Guide 1 - Introduction
+
+1. Chapter 1
+
+	a. Compare and contrast data, databases, database (management) systems and information systems.
+
+	b. Compare and contrast database systems with the following, using the main characteristics of the database approach in your discussion.
+		- data structures and algorithms
+		- traditional file systems
+
+	c. Identify the stakeholders of database systems.
+
+2. Chapter 2
+
+	a. Explain the significance of the categories of data models. Which type of model is displayed in Figure 2.1?
+
+	b. Explain the structure and significance of the three-schema architecture.
+
+	c. Explain the tiers used in a typical web-based information system.
+
