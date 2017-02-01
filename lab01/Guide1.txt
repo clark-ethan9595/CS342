@@ -18,37 +18,37 @@ Guide 1 - Introduction
 			i. More specifically, it is the study of complementary networks that people and organizations use to collect, filter, process, create, and distribute data.
 
 	b. Compare and contrast database systems with the following, using the main characteristics of the database approach in your discussion.
-		§ data structures and algorithms
-			§ DBMS software can access diverse databases by extracting the database definitions from the catalog and use these definitions, even though the application program written in C++ may have struct or class declarations.
-			§ One thing to keep in mind is how/when/where to provide persistent storage for program objects. A complex object in C++ can be stored permanently in an object-oriented DBMS.
-			§ Access time for various data structures is similar to the access time for databases. They need to be fast and efficient.
-			§ Databases must have the ability to represent complex relationships among data.
-		§ traditional file systems
-			§ Traditional file systems have each user define and implement the files needed for a specific software application as part of programming the application. This potentially causes numerous things to happen that a database system can solve:
-				□ Data and information are defined and stored over and over, causing redundancy to happen. In the database approach, a single repository maintains data that is defined once and then accessed by various users repeatedly through queries.
-				□ Typically data definitions are part of the application programs themselves, so these programs are constrained to work with only one specific database, whose structure is declared in the application programs.
-				□ The structure of data files is embedded in the application programs, so any changes to the structure of a file may require changing all programs that access that file. The structure of the data is stored in the DBMS catalog separately from the access programs (program-data independence).
-			§ To summarize, the main characteristics of the database approach versus the file-processing approach are the following:
-				□ Self-describing nature of a database system.
-				□ Insulation between programs and data, and data abstraction.
-				□ Support of multiple views of the data.
-				□ Sharing of data and multiuser transaction processing.
+		a. data structures and algorithms
+			i. DBMS software can access diverse databases by extracting the database definitions from the catalog and use these definitions, even though the application program written in C++ may have struct or class declarations.
+			ii. One thing to keep in mind is how/when/where to provide persistent storage for program objects. A complex object in C++ can be stored permanently in an object-oriented DBMS.
+			iii. Access time for various data structures is similar to the access time for databases. They need to be fast and efficient.
+			iv. Databases must have the ability to represent complex relationships among data.
+		b. traditional file systems
+			i. Traditional file systems have each user define and implement the files needed for a specific software application as part of programming the application. This potentially causes numerous things to happen that a database system can solve:
+				1) Data and information are defined and stored over and over, causing redundancy to happen. In the database approach, a single repository maintains data that is defined once and then accessed by various users repeatedly through queries.
+				2) Typically data definitions are part of the application programs themselves, so these programs are constrained to work with only one specific database, whose structure is declared in the application programs.
+				3) The structure of data files is embedded in the application programs, so any changes to the structure of a file may require changing all programs that access that file. The structure of the data is stored in the DBMS catalog separately from the access programs (program-data independence).
+			ii. To summarize, the main characteristics of the database approach versus the file-processing approach are the following:
+				1) Self-describing nature of a database system.
+				2) Insulation between programs and data, and data abstraction.
+				3) Support of multiple views of the data.
+				4) Sharing of data and multiuser transaction processing.
 
 	c. Identify the stakeholders of database systems.
-		· Actors on the Scene
-			§ Database Administrators: the DBA is responsible for authorizing access to the database, coordinating and monitoring its use, and acquiring software and hardware resources as needed.
-			§ Database Designers: responsible for identifying the data to be stored in the database and for choosing appropriate structures to represent and store this data.
-			§ End Users
-				□ Casual End Users: occasionally access the database, but they may need different information each time.
-				□ Naïve/Parametric End Users: make up a sizable portion of database end users; their main job function revolves around constantly querying and updating the database, using standard types of queries and updates that have been carefully programmed and tested.
-				□ Sophisticated End Users: include engineers, scientists, business analysts, and others who thoroughly familiarize themselves with the facilities of the DBMS in order to implement their own applications to meet their complex requirements.
-				□ Standalone Users: maintain personal databases by using ready-made program packages that provide easy-to-use menu-based or graphics-based interfaces.
-			§ Systems Analysts: determine the requirements of end users, especially naïve/parametric end users, and develop specifications for standard canned transactions that meet these requirements.
-			§ Application Programs/Software Engineers: implement the specifications as programs; then they test, debug, document, and maintain these canned transactions.
-		· Workers Behind the Scene
-			§ DBMS System Designers and Implementers: design and implement the DBMS modules and interfaces as a software package.
-			§ Tool Developers: design and implement tools - the software packages that facilitate database modeling and design, database system design, and improved performance.
-			§ Operators and Maintenance Personnel: responsible for the actual running and maintenance of the hardware and software environment for the database system.
+		a. Actors on the Scene
+			i. Database Administrators: the DBA is responsible for authorizing access to the database, coordinating and monitoring its use, and acquiring software and hardware resources as needed.
+			ii. Database Designers: responsible for identifying the data to be stored in the database and for choosing appropriate structures to represent and store this data.
+			iii. End Users
+				1) Casual End Users: occasionally access the database, but they may need different information each time.
+				2) Naïve/Parametric End Users: make up a sizable portion of database end users; their main job function revolves around constantly querying and updating the database, using standard types of queries and updates that have been carefully programmed and tested.
+				3) Sophisticated End Users: include engineers, scientists, business analysts, and others who thoroughly familiarize themselves with the facilities of the DBMS in order to implement their own applications to meet their complex requirements.
+				4) Standalone Users: maintain personal databases by using ready-made program packages that provide easy-to-use menu-based or graphics-based interfaces.
+			iv. Systems Analysts: determine the requirements of end users, especially naïve/parametric end users, and develop specifications for standard canned transactions that meet these requirements.
+			v. Application Programs/Software Engineers: implement the specifications as programs; then they test, debug, document, and maintain these canned transactions.
+		b. Workers Behind the Scene
+			i. DBMS System Designers and Implementers: design and implement the DBMS modules and interfaces as a software package.
+			ii. Tool Developers: design and implement tools - the software packages that facilitate database modeling and design, database system design, and improved performance.
+			iii. Operators and Maintenance Personnel: responsible for the actual running and maintenance of the hardware and software environment for the database system.
 
 2. Chapter 2
 
@@ -65,7 +65,7 @@ Guide 1 - Introduction
 			ii. The conceptual level has a conceptual schema, which describes the structure of the whole database for a community of users.
 			iii. The external/view level includes a number of external schemas or user views. Each external schema describes the part of the database that a particular user group is interested in and hides the rest of the database from that user group.
 		b. The three-schema architecture is a convenient tool with which the user can visualize the schema levels in a database system.
-		
+
 	c. Explain the tiers used in a typical web-based information system.
 		a. When DBMS access is required, the program running on the client side (one of the systems/tiers) establishes a connection to the DBMS (which is on the server side); once the connection is created, the client program can communicate with the DBMS.
 		b. Open Database Connectivity (ODBC) provides an application programming interface (API), which allows client-side programs to call the DBMS.
