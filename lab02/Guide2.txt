@@ -1,0 +1,58 @@
+Guide 2 - Relational Data Model
+
+Chapter 5 (focus primarily on Sections 5.1-5.2)
+	- Who invented the relational data model? When and where did they do their work?
+		○ The relational data model was first introduced by E. F. (Ted) Codd of IBM Research in 1970, and it attracted immediate attention due to its simplicity and mathematical foundation.
+		○ The model uses the concept of a mathematical relation - which looks somewhat like a table of values - as its basic building block, and has its theoretical basis in set theory and first-order predicate logic.
+		○ The first commercial implementations of the relational model became available in the early 1980s, such as the Oracle DBMS.
+	- Explain  the following terms:
+		○ Relation (table): resembles a table of values or, to some extent, a flat file of records (linear).
+			§ When a relation is thought of as a table of values, each row in the table represents a collection of related data values.
+			§ Symbolically denoted through:
+				□ R(A1, A2, A3, …, An) where R is the relation schema and each Ai is an attribute in the relation.
+		○ Attribute: column header
+		○ Domain: a set of atomic values, each value in the domain is indivisible as far as the formal relational model is concerned.
+			§ Examples:
+				□ Usa_phone_numbers
+				□ Local_phone_numbers
+				□ Names
+				□ Grade_Point_Averages
+			§ A data type or format is also specified for each domain.
+		○ N-Tuple (row): an ordered list of n values where each value is an element of the domain or is a special NULL value.
+		○ NULL value: represent attributes whose values are unknown or do not exist for some individual tuple.
+		○ Primary Key: candidate key whose values are used to identify tuples in the relation.
+			§ Convention: underline
+		○ Foreign Key: a field in one table that uniquely identifies a row of another table or in the same table.
+			§ A set of attributes FK in relation schema R1 is a foreign key of R1 that references relation R2 if it satisfies the following rules:
+				□ The attributes in FK have the same domain(s) as the primary key attributes PK or R2; the attributes of FK are said to reference or refer to the relation R2.
+				□ A value of FK in a tuple t1 of the current state r1(R1) either occurs as a value or PK for some tuple t2 in the current state r2(R2) or is NULL.
+		○ Candidate Key: in general, a relation schema may have more than one key; in this case, each of the keys is a candidate key.
+			§ It is common to designate one of the candidate keys as the primary key of the relation.
+			§ Unique keys, but not underline if not the primary key
+		○ Super Key: SK specifies a uniqueness constraint that no two distinct tuples in any state r of R have the same value for SK.
+		○ Referenced Records: the records in a relation that GET referred to from another record in the relation or in a different relation
+		○ Referencing Records: the records in a relation that refer TO another record in the relation or in a different relation
+	- Are tuples in a relation ordered? How about attribute values in a tuple? Explain why or why not.
+		○ Because mathematically, elements of a set have no order and a relation is defined as a set of tuples, tuples in a relation DO NOT have any particular order. 
+		○ The ordering of attributes is not important, because the attribute name appears with its value; there really is no reason to prefer having one attribute value appear before another in a tuple.
+		○ BUT, the book will mainly use the definition of relation where the attributes are ordered in the relation schema and the values within tuples are similarly ordered because it simplifies much of the notation.
+	- Can attributes have multiple values in a single n-tuple? Why or why not?
+		○ Composite and multivalued attributes are not allowed, this model is sometimes called the flat relational model.
+		○ Much of the theory behind the relational model was developed with assumption in mind, which is called the first normal form assumption. Hence multivalued attributes must be represented by separate relations, and composite attributes are represented only by their single component attributes in the basic relational model.
+
+Chapter 6 (focus primarily on Sections 6.1-6.2 & 6.4)
+	- Create tables with specified constraints, including primary/foreign key, not-null, domain and value-check constraints.
+		○ Entity Integrity Constraint: states that no primary key value can be NULL.
+		○ Referential Integrity Constraint: is specified between two relations and is used to maintain the consistency among tuples in the two relations.
+			§ Informally, the referential integrity constraint states that a tuple in one relation that refers to another relation must refer to an existing tuple in that relation.
+		○ Attribute Constraints given after the name and data type: NOT NULL.
+			§ This is implicitly specified for the attributes that are part of the primary key of reach relation.
+		○ Foreign Key constraints can be left out of the initial CREATE TABLE statement, and then added later using the ALTER TABLE statement.
+		○ CHECK clauses can appear at the end of a CREATE TABLE statement and these are row-based constraints because they apply to each row individually and are checked whenever a row is inserted or modified.
+	- Use the DML commands: INSERT, DELETE, and UPDATE.
+		○ INSERT: used to add a single tuple (row) to a relation (table). We must specify the relation name and a list of values for the tuple. The values should be listed in the same order in which the corresponding attributes were specified in the CREATE table command.
+		○ DELETE: removes tuples from a relation. It includes a WHERE clause, similar to that used in an SQL query, to select the tuples to be deleted.
+		○ UPDATE: used to modify attribute values of one or more selected tuples.
+	- Distinguish the ON DELETE actions: SET NULL, CASCADE
+		○ SET NULL: if the tuple is deleted, the values of any attribute that was referencing the now deleted attributes are set to null.
+		○ CASCADE: if a value is deleted, all the referencing tuples are deleted as well.
