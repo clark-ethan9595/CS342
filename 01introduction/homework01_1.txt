@@ -1,15 +1,25 @@
 Exercise 1.14
 
 a. If the name of the 'CS' (Computer Science) Department changes to 'CSSE' (Computer Science and Software Engineering) Department and the corresponding prefix for the course number also changes, identify the columns in the database that would need to be updated.
-	The columns from the database that would need to be updated would be the Department and Course_Number fields from the COURSE relation, the Course_number field from the SECTION relation, and the Course_number and Prerequisite_number from the PREREQUISITE relation.
+	The columns from the database that would need to be updated would be the Department and Course_Number fields from the COURSE
+	relation, the Course_number field from the SECTION relation, and the Course_number and Prerequisite_number from the
+	PREREQUISITE relation.
 
 b. Can you restructure the columns in the COURSE, SECTION, and PREREQUISITE tables so that only one column will need to be updated?
-	One way to possibly restructure these three tables is to combine them all into one table. The table and its columns would look something like this:
+	One way to possibly restructure these three tables is to combine them all into one table. The table and its columns would
+	look something like this:
 
 	COURSE_SECTION(Section_identifier, Course_name, Course_number, Semester, Year, Instructor, Credit_hours, Prerequisite_number).
 	
-	I added all the fields into one table and removed the Department column in thinking that the Course_number itself would be enough to describe which department the course belongs to.
+	I added all the fields into one table and removed the Department column in thinking that the Course_number itself would be
+	enough to describe which department the course belongs to.
 
-	Another way to possibly restructure these three tables is to use some form of foreign key with an ON UPDATE CASCADE type constraint for the Course_number column in the SECTION table and the Course_number column and Prerequisite_number in the PREREQUISITE table. This way, whoever needs to go in and update the Course_number column in the COURSE table and that would cascade down into the fields that are referencing this field. Again however, this restructuring would need to just remove the Department column from the COURSE table.
+	Another way to possibly restructure these three tables is to use some form of foreign key with an ON UPDATE CASCADE type
+	constraint for the Course_number column in the SECTION table and the Course_number column and Prerequisite_number in the
+	PREREQUISITE table. This way, whoever needs to go in and update the Course_number column in the COURSE table and that would
+	cascade down into the fields that are referencing this field. Again however, this restructuring would need to just remove
+	the Department column from the COURSE table.
 
-	I cannot think of a way to restructure these three tables without removing a column (in my cases, the Department column) and still only have to update one column for the specified changes. Keeping the Department column would require updating of both that column and the Course_number column because of all the prefixes.
+	I cannot think of a way to restructure these three tables without removing a column (in my cases, the Department column) and
+	still only have to update one column for the specified changes. Keeping the Department column would require updating of both
+	that column and the Course_number column because of all the prefixes.

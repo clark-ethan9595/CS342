@@ -1,6 +1,8 @@
 Exercise 2.13
 
-Choose a database application with which you are familiar (SlatePermutate). Design a schema and show a sample database for that application, using the Figures 1.2 and 2.1. What types of additional information and constraints would you like to represent in the schema? Think of several users of your database, and design a view for each.
+Choose a database application with which you are familiar (SlatePermutate). Design a schema and show a sample database for that
+application, using the Figures 1.2 and 2.1. What types of additional information and constraints would you like to represent in
+the schema? Think of several users of your database, and design a view for each.
 
 	User(ID PRIMARY KEY,
 		email,
@@ -31,4 +33,9 @@ Choose a database application with which you are familiar (SlatePermutate). Desi
 	Section_Schedule(Section_ID REFERENCES Section(ID),
 					Schedule_ID REFERENCES Schedule(ID))
 
-	This would be the view for the entire database schema. I think that the tables like the User table wouldn't be available for anyone using SlatePermutate to access, for obvious security purposes. Otherwise, anyone using SlatePermutate would need to be able to access the rest of the data in order to find classes and form schedules for their respective colleges, but they don't need to be able to see other user's schedules. Obviously, the website administrators would need to be able to see the entire view of the database. Since SlatePermutate pulls from the college catalogs/websites, there would be no need for a view just for college administrators to add or update class information.
+	This would be the view for the entire database schema. I think that the tables like the User table wouldn't be available for
+	anyone using SlatePermutate to access, for obvious security purposes. Otherwise, anyone using SlatePermutate would need to
+	be able to access the rest of the data in order to find classes and form schedules for their respective colleges, but they
+	don't need to be able to see other user's schedules. Obviously, the website administrators would need to be able to see the
+	entire view of the database. Since SlatePermutate pulls from the college catalogs/websites, there would be no need for a
+	view just for college administrators to add or update class information.
