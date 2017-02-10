@@ -1,6 +1,8 @@
 Exercise 1.14
 
-a. If the name of the 'CS' (Computer Science) Department changes to 'CSSE' (Computer Science and Software Engineering) Department and the corresponding prefix for the course number also changes, identify the columns in the database that would need to be updated.
+a. If the name of the 'CS' (Computer Science) Department changes to 'CSSE' (Computer Science and Software Engineering)
+Department and the corresponding prefix for the course number also changes, identify the columns in the database that would need
+to be updated.
 	The columns from the database that would need to be updated would be the Department and Course_Number fields from the COURSE
 	relation, the Course_number field from the SECTION relation, and the Course_number and Prerequisite_number from the
 	PREREQUISITE relation.
