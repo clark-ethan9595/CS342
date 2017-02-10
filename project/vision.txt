@@ -1,5 +1,17 @@
 Final Project Vision Statement - Ethan Clark
 
-	For my information system project, I am thinking of creating a student-athlete database for Calvin Athletics. I want to be able to list the students for the sports teams at Calvin College, some of the individuals statistics for their respective sports, schedules for those teams, coach's information, recruits, and even maybe some academic information (because Calvin is very focused on the STUDENT-athlete portion). I think this database information system would be complex enough to require numerous tables and relationships. I think this database would be different in the sense that it would combine aspects of athletics that are separate and hard to connect to date, as in academics, recruiting, schedules, and team and player statistics.
+	For my information system project, I am thinking of creating a student-athlete database for Calvin Athletics. I want to be
+	able to list the students for the sports teams at Calvin College, some of the individuals statistics for their respective
+	sports, schedules for those teams, coach's information, recruits, and even maybe some academic information (because Calvin
+	is very focused on the STUDENT-athlete portion). I think this database information system would be complex enough to require
+	numerous tables and relationships. I think this database would be different in the sense that it would combine aspects of
+	athletics that are separate and hard to connect to date, as in academics, recruiting, schedules, and team and player
+	statistics.
 
-	Users for this database could vary in respect to what they would need to be looking at. An overall view of this database would be useful for the athletic administration to get information regarding any athlete or team at any time. Users could also be coaches, who could focus on their team information or they could use this to store information regarding potential recruits. Athletes could use this database to track their statistics for a specific season or sport, or even for their whole career, and they could track and store workout information in the database as well. Even those that work for the facility of Van Nord Arena could use this to look up team's schedules and know when different teams would be playing in the gym or the sports facilities around Calvin.
+	Users for this database could vary in respect to what they would need to be looking at. An overall view of this database
+	would be useful for the athletic administration to get information regarding any athlete or team at any time. Users could
+	also be coaches, who could focus on their team information or they could use this to store information regarding potential
+	recruits. Athletes could use this database to track their statistics for a specific season or sport, or even for their whole
+	career, and they could track and store workout information in the database as well. Even those that work for the facility of
+	Van Nord Arena could use this to look up team's schedules and know when different teams would be playing in the gym or the
+	sports facilities around Calvin.
