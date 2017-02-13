@@ -33,7 +33,7 @@
 		iii. In ER diagrams, both a weak entity type and its identifying relationship are distinguished by surrounding their boxes and diamonds with double lines. The partial key attribute is underlined with a dashed or dotted line.
 
 	d. Model a person-household database (from class 2) using an ERD.
-		i. See file in same directory named Guide2_ERDiagram.png
+		i. See file in same directory named Guide3_ERDiagram
 
 	e. Skim the material in Section 3.8 on UML diagrams; we won't use it here but we have addressed it in CS 262 and will review it in unit 11.
 
@@ -42,7 +42,7 @@
 2. Read Chapter 9
 
 	a. Map the ERD model from above to a relational database model.
-		i. See file in same directory named Guide2_RelationalModel.png
+		i. See file in same directory named Guide3_RelationalModel
 
 	b. Explain how to map from a UML model to a relational database model. We will address this issue more carefully in a later unit (on object-relational mapping).
 		i. Step 1: Mapping of Regular Entity Types
