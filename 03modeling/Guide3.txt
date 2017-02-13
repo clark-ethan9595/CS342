@@ -1,0 +1,66 @@
+1. Read Chapter 3
+
+	a. Compare and contrast the database and the software design processes. Are agile modeling practices applicable to database design as well?
+		i. In many software design tools, the database design methodologies and software engineering methodologies are intertwined since these activities are strongly related.
+		ii. Both database and software design processes include diagrams or models to provide a high-level view of the requirements (e.g. conceptual design model for database and class diagram for software). They both also start by gathering requirements from its users (User Stories and Functional Requirements).
+		iii. Database design practices, according to Figure 3.1 from the textbook, does not immediately scream agile to me. The diagram follows a step by step sequence of things to do for the database design process, which doesn't seem very iterative or allow for "adaptive" requirements. But my guess is that this is not the only way to do database design. The face-to-face communication of gathering requirements can be pretty agile, and I'm sure the process as a whole can be fast and iterative so that the team can supply the customers with high level models and be able to adapt to the customer's suggestions or recommendations.
+
+	b. Explain the following terms:
+		i. Entities: a thing or object in the real world with an independent existence.
+			1) An entity may be an object with a physical existence or it may be an object with a conceptual existence.
+		ii. Relationships: among n entity types, E1, E2, E3, …, En defines a set of associations - or a relationship set - among entities from these entity types.
+			1) Cardinality Constraint: the cardinality ratio for a binary relationship specifies the MAXIMUM number of relationship instances that an entity can participate in.
+			2) Participation Constraint: specifies whether the existence of an entity depends on its being related to another entity via the relationship type.
+				a) This constraint specifies the MINIMUM number of relationship instances that each entity can participate in and is sometimes called the minimum cardinality constraint.
+				b) Total Participation: every entity in the total set of a particular entity must be related to another entity.
+					i) Example: every entity in the total set of employee entities must be related to a department entity via WORKS_FOR.
+				c) Partial Participation: some or part of the set of a particular entity are related to some entity, but not necessarily all.
+					i) Example: some or part of the set of employee entities are related to some department entity via MANAGES.
+		iii. Attributes:  the particular properties that describe an entity.
+			1) Simple: not divisible, atomic attributes.
+			2) Composite: can be divided into smaller subparts, which represent more basic attributes with independent meanings.
+				a) Useful to model situations in which a user sometimes refers to the composite attribute as a unit but at other times refers specifically to its components.
+			3) Multi-valued: different numbers of values; may have lower and upper bounds to constrain the number of values allowed for each individual entity.
+			4) Derived: attributes that can be found by some calculations (or deriving) from another attribute, called the stored attribute.
+				a) Example: "Age" can be derived/determined from "Birth_Date".
+			5) NULL: unknown, missing or not known whether it exists.
+
+	c. Explain weak entities and identifying relationships.
+		i. Weak Entities: entity types that do not have key attributes of their own
+			1) Entities belonging to a weak entity type are identified by being related to specific entities from another entity type in combination with one of their attribute values.
+		ii. We call this other entity type the identifying or owner entity type, and we call the relationship type that relates a weak entity type to its owner the identifying relationship of the weak entity type.
+			1) A weak entity type always has a total participation constraint with respect to its identifying relationship because a weak entity cannot be identified without an owner entity.
+		iii. In ER diagrams, both a weak entity type and its identifying relationship are distinguished by surrounding their boxes and diamonds with double lines. The partial key attribute is underlined with a dashed or dotted line.
+
+	d. Model a person-household database (from class 2) using an ERD.
+		i. See file in same directory named Guide2_ERDiagram.png
+
+	e. Skim the material in Section 3.8 on UML diagrams; we won't use it here but we have addressed it in CS 262 and will review it in unit 11.
+
+	* Note the ERD reference sheet in Figure 3.14 *
+
+2. Read Chapter 9
+
+	a. Map the ERD model from above to a relational database model.
+		i. See file in same directory named Guide2_RelationalModel.png
+
+	b. Explain how to map from a UML model to a relational database model. We will address this issue more carefully in a later unit (on object-relational mapping).
+		i. Step 1: Mapping of Regular Entity Types
+			1) For each regular (strong) entity type E in the ER schema, create a relation R that includes all the simple attributes of E.
+		ii. Step 2: Mapping of Weak Entity Types
+			1) For each weak entity type W in the ER schema with owner entity type E, create a relation R and include all simple attributes (or simple components of composite attributes) of W as attributes of R.
+		iii. Step 3: Mapping of Binary 1:1 Relationship Types
+			1) Foreign Key Approach
+				a) Most useful and should be followed unless special conditions exist.
+			2) Merged Relation Approach
+			3) Cross-Reference or Relationship Relation Approach
+		iv. Step 4: Mapping of Binary Relationship Types
+			1) Foreign Key Approach
+				a) Generally preferred approach.
+			2) Relationship Relation Approach
+		v. Step 5: Mapping of Binary M:N Relationship Types
+			1) For each binary M:N relationship type R, create a new relation S to represent R.
+		vi. Step 6: Mapping of Multivalued Attributes
+			1) For each multivalued attribute A, create a new relation R.
+		vii. Step 7: Mapping of N-ary Relationship Types
+			1) For each n-ary relationship type R, where n > 2, create a new relationship relation S to represent R.
