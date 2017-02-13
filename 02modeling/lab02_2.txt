@@ -1,0 +1,14 @@
+Lab 2 CS342 - lab02_2.txt
+Ethan Clark
+
+a. The constraint that I would add would say:
+	CHECK ((score = null) or (score is NOT NULL and votes > 1000)).
+	This check lets any record with a null score value have any number of votes, but if the
+	score record IS NOT NULL, then the number of votes must be more than 1000.
+
+b. One circumstance that I can think of for turning off a constraint for a particular table
+	would be for modifying or updating when that table has records that are referencing it.
+	This would mean that turning off the foreign key constraint would allow the DBA to do the
+	updates that they want to do, update the corresponding referencing records, and then turn back
+	on the constraint for the original table. The DBA cannot do the necessary updates while the
+	referencing records need something to reference to.
