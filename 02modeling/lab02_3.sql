@@ -66,4 +66,7 @@ INSERT INTO Casting VALUES (2,4,'costar');
 	--		advantage, there will be no repeated ID number between the movie relation and the performer relation.
 
 -- b.
-	-- 
+	-- A potential problem with using sequences in the DDL command file itself is that inserting into the database from outside
+	--		the command file may be a bit tricky. The SQL query to insert a new row would need to call movie_seq.NEXTVAL each time
+	--		a new record wants to be inserted. I feel like this may cause a little bit of trouble if this database would actually
+	--		get implemented with some applciation programs.
