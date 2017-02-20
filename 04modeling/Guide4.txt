@@ -1,0 +1,100 @@
+	1. Read Chapter 14 (focus primarily on Sections 14.1-2, 14.3.1-3, 14.5-6) - It's okay to submit rather fuzzy or even empty answers on the material specifically marked for Wednesday's discussion.
+	
+		a. Explain the four informal guidelines discussed in Section 14.1
+			i. Making sure that the semantics of the attributes is clear in the schema.
+				1) Whenever we group attributes to form a relation schema, we assume that attributes belonging to one relation have certain real-world meaning and a proper interpretation associated with them.
+				2) The semantics of a relation refers to its meaning resulting from the interpretation of attribute values in a tuple.
+				3) In general, the easier it is to explain the semantics of the relation - or in other words, what a relation exactly means and stands for - the better the relation schema design will be.
+				4) Design a relation schema so that it is easy to explain its meaning. Do not combine attributes from multiple entity types and relationship types into a single relation. Intuitively, if a relation schema corresponds to one entity type or one relationship type, it is straightforward to explain its meaning. Otherwise, if the relation corresponds to a mixture of multiple entities and relationships, semantic ambiguities will result and the relation cannot be easily explained.
+			ii. Reducing the redundant information in tuples.
+				1) One goal of schema design is to minimize the storage space used by the base relations (and hence the corresponding files). Grouping attributes into relation schemas has a significant effect on storage space.
+				2) Storing natural joins of base relations leads to an additional problem referred to as update anomalies:
+					a) Insertion Anomalies:
+						i) Making sure to enter the same attribute values correctly so that they are consistent with other tuples already in the particular relation.
+						ii) It is difficult to insert a new department that has no employees as yet in the EMP_DEPT relation (figure 14.3)
+					b) Deletion Anomalies: deleting an employee tuple that happens to represent the last employee working for a particular department loses the information regarding that department (figure 14.3)
+					c) Modification Anomalies: we must update all the employee tuples if we want to update one little information bit about the department (figure 14.3)
+				3) Design the base relation schemas so that no insertion, deletion, or modification anomalies are present in the relations. If any anomalies are present, note them clearly and make sure that the programs that update the database will operate correctly.
+			iii. Reducing the NULL values in tuples
+				1) Using NULL values can waste space at the storage level and may also lead to problems with understanding the meaning of the attributes and with specifying JOIN operations at the logical level.
+				2) NULL values can have multiple interpretations:
+					a) The attribute does not apply to this tuple.
+					b) The attribute value for this tuple is unknown.
+					c) The value is known but absent; that is, it has not been recorded yet.
+				3) As far as possible, avoid placing attributes in a base relation whose values may frequently be NULL. If NULLs are unavoidable, make sure that they apply in exceptional cases only and do not apply to a majority of tuples in the relation.
+			iv. Disallowing the possibility of generating spurious tuples
+				1) Design relation schemas so that they can be joined with equality conditions on attributes that are appropriately related (primary key, foreign key) pairs in a way that guarantees that no spurious tuples are generated. Avoid relations that contain matching attributes that are not (foreign key, primary key) combinations because joining on such attributes may produce spurious tuples.
+		
+		b. Explain the terms functional dependency (for Monday, see Section 14.2) and multi-valued dependency (for Wednesday, see Section 14.6) by giving an example of each and showing how it satisfies the term's formal definition.
+			i. Functional Dependency
+				1) A functional dependency is a constraint between two sets of attributes from the database.
+				2) Definition
+					a) A functional dependency, denoted by X --> Y, between two sets of attributes X and Y that are subsets of R specifies a constraint on the possible tuples that can form a relation state r of R. The constraint is that, for any two tuples t1 and t2 in r that have t1[X] = t2[X], they must also have t1[Y] = t2[Y].
+					b) This means that the values of the Y component of a tuple in r depend on, or are determined by, the values of the X component; alternatively, the values of the X component or a tuple uniquely (or functionally) determine the values of the Y component.
+					c) Thus, X functionally determines Y in a relation schema R if, and only if, whenever two tuples of r(R) agree on their X-value, they must necessarily agree on their Y-value.
+				3) A functional dependency is a property of the semantics or meaning of the attributes.
+				4) Examples:
+					a) {State, Driver_license_number} -->  Ssn 
+						i) This functional dependency says that having a home state location and a driver's license number uniquely determines a social security number. 
+					b) Ssn --> Ename (from figure 14.3)
+						i) The value of an employee's Social Security number uniquely determines the employee name.
+			ii. Multi-Valued Dependency
+				1) Definition: a multivalued dependency X --> Y specified on relation schema R, where X and Y are both subsets of R, specifies the following constraint on any relation state r of R: It two tuples t1 and t2 exist in r such that t1[X] = t2[X], then two tuples t3 and t4 should exist in r with the following properties, where we use Z to denote (R - (X U Y)):
+					a) t3[X] = t4[X] = t1[X] = t2[X]
+					b) t3[Y] = t1[Y] and t4[Y] = t2[Y]
+					c) t3[Z] = t2[Z] and t4[Z] = t1[Z]
+				2) Whenever X -->> Y holds, we say that X multidetermines Y.
+				3) Example:
+					a) Figure 14.15 (a)
+						i) EMP(Ename, Pname, Dname)
+							A. This EMP relation has two multivalued dependencies:
+								1. Ename -->> Pname
+								2. Ename -->> Dname
+		
+		c. Review the formal definitions of these terms: superkey, key (see Section 14.3.3).
+			i. Superkey:
+				1) A superkey of a relation schema R = {A1, A2, …, An} is a set of attributes S is a subset of R with the property that no two tuples t1 and t2 in any legal relation state r of R will have t1[S] = t2[S].
+			ii. Key:
+				1) A key K is a superkey with the additional property that removal of any attribute from K will cause K not to be a superkey anymore.
+			iii. The difference between a key and a superkey is that a key has to be minimal; that is, if we have a key K={A1, A2, …, An} of R, then K - {Ai} is not a key of R for any Ai, 1 <= i <= k.
+			iv. If a relation schema has more than one key, each is called a candidate key. One of the candidate keys is arbitrarily designated to be the primary key, and the others are called secondary keys.
+		
+		d. Explain BCNF (for Monday, see Section 14.5) and 4NF (for Wednesday, see section 14.6) by giving an example relation and proving whether it schema conforms (or fails to conform) to the definitions of each normal form.
+			i. Boyce-Codd Normal Form (BCNF)
+				1) It was proposed as a simpler form of 3NF, but it was found to be stricter than 3NF. That is, every relation in BCNF is also in 3NF; however, a relation in 3NF is not necessarily in BCNF.
+				2) Definition: A relation schema R is in BCNF if whenever a nontrivial functional dependency X --> A holds in R, then X is a superkey of R.
+				3) The formal definition of BCNF differs from the definition of 3NF in that clause (b) of 3NF< which allows f.d.'s having the RHS as a prime attribute, is absent from BCNF. That makes BCNF a stronger normal form compared to 3NF.
+				4) Example:
+					a) Figure 14.13 (a)
+						i) Start with:
+							A. LOTS1A(Property_ID#, County_name, Lot#, Area)
+						ii) BCNF Normalization to:
+							A. LOTS1AX(Property_ID#, Area, Lot#)
+							B. LOTS1AY(Area, County_name)
+						iii) We can decompose LOTS1A into two BCNF relations LOTS1AX and LOTS1AY.
+						iv) This decomposition loses the functional dependency {County_name, Lot#}  --> {Property_ID#, Area} because its attributes no longer coexist in the same relation after decomposition.
+			ii. Fourth Normal Form (4NF)
+				1) Definition: a relation schema R is in 4NF with respect to a set of dependencies F (that includes functional dependencies and multivalued dependencies) if, for every nontrivial multivalued dependency X -->> Y in F+, X is a superkey for R
+					a) A relation that is not in 4NF due to a nontrivial multivalued dependency must be decomposed to convert it into a set of relations in 4NF.
+					b) The process of normalizing a relation involving the nontrivial multivalued dependencies that is not in 4NF consists of decomposing it so that each multivalued dependency is represented by a separate relation where it becomes a trivial multivalued dependency.
+				2) Example:
+					a) Figure 14.15 (b)
+						i) EMP_PROJECTS(Ename, Pname)
+							A. Because the multivalued dependency Ename -->> Pname is a trivial MVD.
+						ii) EMP_DEPENDENTS(Ename, Dname)
+							B. Because the multivalued dependency Ename -->> Dname is a trivial MVD.
+		
+		e. Explain when one would want to normalize a relational schema and when one might want to de-normalize one.
+			i. There are a couple of reasons/scenarios when you would want to normalize a relational schema. The goal of normalization is to reduce and even eliminate redundancy, and important consideration for app developers because it is difficult to store objects in a relational database that maintains the same information in multiple places.
+			ii. I needed to do some online research to figure out if there are any times you would want to de-normalize a relational schema. I found two situations:
+				1) Immutable data and append-only scenarios
+				2) When multiple joins are needed to produce a commonly accessed view
+		
+	2. Review Section 15.1.1 well enough to define Armstrong's axioms (IR1-3) and closures.
+		a. Closure
+			i. Definition: formally, the set of all dependencies that include F as well as all dependencies that can be inferred from F is called the closure of F; it is denoted by F+.
+				1) The closure F+ of F is the set of all functional dependencies that can be inferred from F.
+		b. Armstrong's Axioms
+			i. IR1 (reflexive rule): If X is a subset of Y, then X --> Y.
+			ii. IR2 (augmentation rule): {X --> Y} |= XZ --> YZ.
+			iii. IR3 (transitive rule): {X --> Y, Y --> Z} |= X --> Z.

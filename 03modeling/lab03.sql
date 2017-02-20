@@ -5,6 +5,7 @@
 --
 -- Extended by: Ethan Clark
 -- Lab3 - Exercises 3.1 and 3.2
+-- Homework3 - Lab Exercise 3.3
 
 -- drop current database
 DROP TABLE Mentorship;
