@@ -25,15 +25,9 @@ CREATE TABLE HouseHold(
 	phoneNumber char(12)
 	);
 	
--- If a Household is removed, there would no longer be a homegroup associated with that
---		house, so we want to remove that record from the homegroup too.
--- I figure that a homegroup would meet at one of the households in the church database
---		so that is why householdID is a foreign key to reference a particular household
---		already in the church database.
 CREATE TABLE Homegroup (
 	ID integer PRIMARY KEY,
-	householdID integer,
-	FOREIGN KEY (householdID) REFERENCES HouseHold(ID) ON DELETE CASCADE
+	meetLocation varchar(30)
 	);
 
 -- If a household is removed, we still want the person to be in the database, so we
@@ -78,16 +72,18 @@ CREATE TABLE Person_Team (
 	personID integer,
 	teamID integer,
 	role varchar(15),
-	timeDurationMonths integer,
+	startDate date,
+	endDate date,
 	FOREIGN KEY (personID) REFERENCES Person(ID) ON DELETE CASCADE,
-	FOREIGN KEY (teamID) REFERENCES Team(ID) ON DELETE CASCADE
+	FOREIGN KEY (teamID) REFERENCES Team(ID) ON DELETE CASCADE,
+	CONSTRAINT PK_D PRIMARY KEY (personID, teamID)
 	);
 
 -- Insert sample data
 INSERT INTO Household VALUES (0,'2347 Oxford Dr. SE','Grand Rapids','MI','49506','616-243-5680');
 INSERT INTO Household VALUES (1,'2632 Colton Dr. SE','Grand Rapids','MI','49506','616-888-8888');
 
-INSERT INTO Homegroup VALUES (0, 0);
+INSERT INTO Homegroup VALUES (0, 'coffee shop');
 
 INSERT INTO Person VALUES (0,'mr.','Keith','VanderLinden', 0, 'husband', 'm', 0);
 INSERT INTO Person VALUES (1,'ms.','Brenda','VanderLinden', 0, 'wife', 'm', 0);
@@ -99,12 +95,16 @@ INSERT INTO Mentorship VALUES (0, 2);
 INSERT INTO Team VALUES (0, 'Elders');
 INSERT INTO Team VALUES (1, 'Music');
 
-INSERT INTO Person_Team VALUES (0, 1, 'Leader', 6);
-INSERT INTO Person_Team VALUES (2, 0, 'Outreach', 2);
+INSERT INTO Person_Team VALUES (2, 0, 'Outreach', '01-Feb-2017', '01-Oct-2017');
+INSERT INTO Person_Team VALUES (0, 1, 'Leader', '19-Jan-2017', '19-Jul-2017');
 
 -- Sample queries
 SELECT * FROM Homegroup;
 
 SELECT Person.ID FROM Person, Homegroup WHERE Person.homegroupID = Homegroup.ID;
 
-SELECT Person.firstName, Team.name FROM Person, Team, Person_Team WHERE Person.ID = Person_Team.personID AND Team.ID = Person_Team.teamID;
+SELECT Person.firstName, Team.name FROM Person, Team, Person_Team
+WHERE Person.ID = Person_Team.personID AND Team.ID = Person_Team.teamID;
+
+SELECT Person.firstName, Person_Team.endDate FROM Person, Person_Team
+WHERE Person.ID = Person_Team.personID ORDER BY Person_Team.endDate ASC;
