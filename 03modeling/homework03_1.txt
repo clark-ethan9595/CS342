@@ -1,7 +1,26 @@
 1. Consider the ERD given in Figure 3.21 (The AIRLINE database schema):
 
-	a. Based on what you see in the diagram, explain the difference between flights, flight legs, and leg instances. Please give a short explanatory paragraph.
+	a. Based on what you see in the diagram, explain the difference between flights, flight legs, and leg instances. Please
+	give a short explanatory paragraph.
+	Based on what I see from the diagram, it looks like a flight can have many flight legs to it, and each leg instance has
+	some particular information associated with it. A flight has a number (primary key), an airline, and weekdays in which the
+	flight happens. A leg instance is a particular occurrence of a leg on a particular date and it stores the number of seats
+	available. The flight leg only contains the leg number. A leg instance can only be associated with one flight leg, but one
+	flight leg could be associated with many leg instances. I think this is because a particular flight itself could happen
+	multiple days of the week, i.e. a flight from Grand Rapids to Chicago could leave at 10:00 AM every Monday, Wednesday, and
+	Friday. In this example, Flight Leg is a weak entity, with partial key of leg number, and is identified with the Flight
+	entity as the identifying entity. Leg instance has total participation in the Instance_Of relationship and Flight Leg has
+	total participation in the Legs relationship.
 
-	b. The names of some of the attributes in this diagram are underlined with dotted lines. You’ll note that this notation is not explained in the Figure 3.14 cheatsheet. What does it mean?
-	
-	c. You’ll note that the “SEAT” entity has a total participation in the “RESERVATION” relationship (i.e., we would write the cardinality constraint {1,*} on the “LEG_INSTANCE” side of the relationship). Why do you think the database modelers did it this way?
+	b. The names of some of the attributes in this diagram are underlined with dotted lines. You’ll note that this notation is
+	not explained in the Figure 3.14 cheatsheet. What does it mean?
+	An attribute with an underline dotted line refers to the partial key for a weak entity type. A partial key is the
+	attribute that can uniquely identify weak enties that are related to the same owner identity.
+
+	c. You’ll note that the “SEAT” entity has a total participation in the “RESERVATION” relationship (i.e., we would write
+	the cardinality constraint {1,*} on the “LEG_INSTANCE” side of the relationship). Why do you think the database modelers
+	did it this way?
+	The SEAT entity has total participation in the RESERVATION relationship in this diagram because it makes sense that every
+	single possible seat needs to be related through a reservation to an instance of leg of a flight. It does not make logical
+	sense to have people be able to reserve a seat for a leg of a flight that does not even exist. Every seat needs to belong
+	to a particular instance of a leg of a flight.
