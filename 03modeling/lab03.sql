@@ -77,13 +77,12 @@ CREATE TABLE Person_Team (
 CREATE TABLE Request (
 	submitDate date,
 	text_char varchar(50),
-	access varchar(50),
+	access_var varchar(50),
 	response varchar(50),
 	requestorID integer,
 	responderID integer,
 	FOREIGN KEY (requestorID) REFERENCES Household(ID) ON DELETE CASCADE,
-	FOREIGN KEY (responderID) REFERENCES Person(ID) ON DELETE SET NULL,
-	PRIMARY KEY (submitDate)
+	FOREIGN KEY (responderID) REFERENCES Person(ID) ON DELETE SET NULL
 	);
 
 -- Insert sample data
@@ -92,7 +91,7 @@ INSERT INTO Household VALUES (1,'2632 Colton Dr. SE','Grand Rapids','MI','49506'
 
 INSERT INTO Homegroup VALUES (0, 'coffee shop');
 
-INSERT INTO Person VALUES (0,'mr.','Keith','VanderLinden', 0, 'husband', 'm', 0, NULL;
+INSERT INTO Person VALUES (0,'mr.','Keith','VanderLinden', 0, 'husband', 'm', 0, NULL);
 INSERT INTO Person VALUES (1,'ms.','Brenda','VanderLinden', 0, 'wife', 'm', 0, 0);
 INSERT INTO Person VALUES (2,'mr.','Ethan','Clark', 1, 'son', 'm', NULL, 0);
 
@@ -102,7 +101,7 @@ INSERT INTO Team VALUES (1, 'Music');
 INSERT INTO Person_Team VALUES (2, 0, 'Outreach', '01-Feb-2017', '01-Oct-2017');
 INSERT INTO Person_Team VALUES (0, 1, 'Leader', '19-Jan-2017', '19-Jul-2017');
 
-INSERT INTO Request VALUES ('05-Sept-2016', 'Please pray for my family', 'placeholder', 'Know we are praying', 0, 0);
+INSERT INTO Request VALUES ('05-Sep-2016', 'Please pray for my family', 'placeholder', 'Know we are praying', 0, 0);
 INSERT INTO Request VALUES ('12-Nov-2016', 'Please pray for my sister', 'placeholder text', 'Know we are praying for you', 0, 1);
 INSERT INTO Request VALUES ('30-Jan-2016', 'My grandma passed away', 'text placeholder', 'We are sorry for your loss', 1, 2);
 
@@ -117,8 +116,6 @@ WHERE Person.ID = Person_Team.personID AND Team.ID = Person_Team.teamID;
 SELECT Person.firstName, Person_Team.endDate FROM Person, Person_Team
 WHERE Person.ID = Person_Team.personID ORDER BY Person_Team.endDate ASC;
 
-SELECT * FROM Request;
-
-SELECT submitDate, text_char, ID FROM Household, Request
+SELECT submitDate, text_char, Household.ID FROM Household, Request
 WHERE Household.ID = Request.requestorID AND Household.ID = 0
 ORDER BY submitDate DESC;
