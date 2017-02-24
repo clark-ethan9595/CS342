@@ -39,11 +39,16 @@ INSERT INTO AltPerson VALUES (3, 'Jeff', 'm', NULL, NULL, NULL, 'deacons', 'chai
 --		to that team, the team name will need to be repeated, wasting space. We also have to
 --		repeat the personId, name, and status for every time someone joins a new team.
 -- To prove this formally, let us take a look at whether this relation is in BCNF. For BCNF
---		all left hand sides of functional dependencies must be a superkey of the relation. There is
---		a functional dependency teamName -> teamRole. There is another functional dependency personId
---		-> name. However, the Left Hand Side of these functional dependencies are NOT superkeys. The 
--- 		superkey for this relation is personId, teamName together. Just personId alone is not a superkey
---		and just teamName alone is not a superkey either.
+--		all left hand sides of functional dependencies must be a superkey of the relation.
+--
+--		Functional Dependencies:
+--			personId -> name, status
+--			mentorId -> mentorName, mentorStatus
+--			teamName -> teamRole, teamTime
+--
+--		However, the Left Hand Side of these functional dependencies are NOT superkeys. The 
+-- 		superkey for this relation is personId, teamName together. Just personId alone is not a superkey,
+--		just teamName alone is not a superkey, and just mentorId alone is not a superkey.
 
 -- b.
 -- A more properly normalized schema for this database would be:

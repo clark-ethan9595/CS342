@@ -59,4 +59,7 @@ WHERE pt.personName = pv.personName;
 -- c.
 -- Just because the original schema and the derived "view" have the same number of records does not
 --		mean they are equally appropriate. The single "view" relation needs to have every combination of records
---		to make up all the data/information for that relation.
+--		to make up all the data/information for that relation. I think yes, it may depend on the context; if you
+--		want all the data to appear in a single table every time, then this single relation view would be best. But
+--		that must take into consideration that single relation is not in 4NF form, if one desired to conform to that
+--		kind of normal form.
