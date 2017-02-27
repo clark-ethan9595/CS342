@@ -1,0 +1,2 @@
+-- Schema for the Calvin Student-Athlete database
+-- Ethan Clark - CS 342

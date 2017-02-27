@@ -1,0 +1,12 @@
+Homework04 Text File
+04modeling - 2/28/17
+Ethan Clark - CS 342
+
+1. Do exercise 14.31
+	a. Consider only 1NF, BCNF, and 4NF. Ignore 2NF and 3NF.
+
+2. Do exercise 14.35. Make the following (potentially counter-intuitive) assumptions.
+	a. Book_name and edition functionally determine year, but not vice-versa.
+	b. The title and coauthor names stay the same from edition to edition.
+
+	Your justification of the MVD can be informal, one-to-two sentence explanation.

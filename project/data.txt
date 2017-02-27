@@ -1,0 +1,1 @@
+Information on how I got my data, identifying/justifying the normal form, and demonstrating my schema satisfies that normal form.

@@ -1,0 +1,2 @@
+-- Drop all tables from the current Calvin Student-Athlete database
+-- Ethan Clark - CS 342

@@ -1,0 +1,2 @@
+-- Insert sample data into the Calvin Student-Athlete database
+-- Ethan Clark - CS 342
