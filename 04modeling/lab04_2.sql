@@ -67,17 +67,22 @@ WHERE pt.personName = pv.personName;
 
 -- d.
 -- Creating a new table to store the data queried by the combined "view" query
+
+-- drop current database
 DROP TABLE Person;
 
+-- create table
 CREATE TABLE Person (
 	personName varchar(10),
     teamName varchar(10),
     personVisit date
 );
 
+-- Insert sample data from combined "view" query
 INSERT INTO Person
 SELECT pt.personName, pt.teamName, pv.personVisit
 FROM PersonTeam pt, PersonVisit pv
 WHERE pt.personName = pv.personName;
 
+-- Show all data from new table
 SELECT * FROM Person;

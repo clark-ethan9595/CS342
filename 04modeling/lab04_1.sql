@@ -75,10 +75,12 @@ INSERT INTO AltPerson VALUES (3, 'Jeff', 'm', NULL, NULL, NULL, 'deacons', 'chai
 -- c.
 -- Creating new normalized sub-relations
 
+-- drop current database
 DROP TABLE Person_Team;
 DROP TABLE Team;
 DROP TABLE Person;
 
+-- create tables
 CREATE TABLE Person (
 	personId integer PRIMARY KEY,
 	name varchar(10),
@@ -88,22 +90,24 @@ CREATE TABLE Person (
 );
 
 CREATE TABLE Team (
-	teamName varchar(10)
+	teamName varchar(10) PRIMARY KEY
 );
 
 CREATE TABLE Person_Team (
 	teamName varchar(10),
-	personId varchar(10),
+	personId integer,
 	teamRole varchar(10),
-    teamTime varchar(10)
-	FOREIGN KEY (teanName) REFERENCES Team(teamName),
+    teamTime varchar(10),
+	FOREIGN KEY (teamName) REFERENCES Team(teamName),
 	FOREIGN KEY (personId) REFERENCES Person(personId)
 );
 
+-- insert data from old table
 INSERT INTO Person SELECT DISTINCT personId, name, status, mentorId FROM AltPerson;
 INSERT INTO Team SELECT DISTINCT teamName FROM AltPerson;
 INSERT INTO Person_Team SELECT DISTINCT teamName, personId, teamRole, teamTime FROM AltPerson;
 
+-- sample queries
 SELECT * FROM Person;
 SELECT * FROM Team;
 SELECT * FROM Person_Team;
