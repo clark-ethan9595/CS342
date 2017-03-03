@@ -57,8 +57,8 @@ CREATE TABLE Team (
 );
 
 CREATE TABLE Athlete_Team (
-	athleteId integer,
 	teamId integer,
+	athleteId integer,
 	PRIMARY KEY (studentId, teamId),
 	FOREIGN KEY studentId REFERENCES Student_Athlete(studentId),
 	FOREIGN KEY teamId REFERENCES Team(teamId)
