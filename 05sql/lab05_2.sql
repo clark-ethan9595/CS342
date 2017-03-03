@@ -5,6 +5,7 @@
 
 -- a.
 -- The youngest person in the database is Susan Heerema, born on 01-NOV-97.
+-- This nested query is not correlated, it could run on its own first.
 SELECT id, firstName, lastName, birthDate
 FROM (SELECT * FROM Person WHERE birthDate IS NOT NULL ORDER BY birthDate DESC)
 WHERE ROWNUM = 1;
