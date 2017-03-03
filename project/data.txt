@@ -1,1 +1,74 @@
-Information on how I got my data, identifying/justifying the normal form, and demonstrating my schema satisfies that normal form.
+data.txt - Description of the data and the normal form
+Ethan Clark - CS 342
+
+I got my data for this database in a couple of places. I got the school information and the player information from the athletic
+department websites for each of the schools in the MIAA conference. I then used a couple different websites for generating random data
+for the rest of the tables, adding in my own creative names here and there. My main problem came with figuring out how to generate data
+so that I could get each of the athletes enough data on them. I was able to set up the random generation so that each team played the
+other teams once, and for each of those games, I was able to specify which players should compete in that particular game given the two
+teams that were playing. That totaled into 21 games (each team plays everyone once) and then 210 athlete_game record because I choose
+to include only 5 players from each of the schools, resulting in 21 * (5 * 2) = 210 records for the athlete_game table. I randomly
+generated the statistics for each of the athletes during their match as well.
+
+The normal form I am choosing to satisfy is going to be Fourth Normal Form (4NF). 4NF is going to force me to make sure that things are
+organized in terms of my relations themselves, but also the data inside those relations. When it comes to reducing the amount of pain
+that I endure as the semester goes, I think using 4NF will help reduce that pain. BCNF is very closely tied to 4NF, but because of the
+examples that we did in class where everyone could tell that something was "off" about the relations that were not in 4NF in terms of
+redundant code, I did not want that to happen with my database projects.
+
+Demonstration:
+	List of Functional Dependencies:
+		School:
+			schoolId --> name, city, state_char
+			schoolId is a superkey for this relation.
+
+		Athlete:
+			athleteId --> firstName, lastName, city, state_char, grade, GPA, position, schoolId
+			athleteId is a superkey for this relation.
+
+		Game:
+			gameId --> matchDate, homeSchoolId, awaySchoolId
+			gameId is a superkey for this relation.
+
+		League:
+			leagueId --> leagueName, startDate
+			leagueId is a superkey for this relation.
+
+		Users:
+			userId --> userName, firstName, lastName, leagueId
+			userId is a superkey for this relation. I only allow for each user to be in one league.
+
+		Team:
+			teamId --> teamName, userId, leagueId
+			teamid is a superkey for this relation. I only allow for each user to have exactly one team, and each team can only be in
+			one league.
+
+		Athlete_Team:
+			No functional dependencies; athleteId, teamId is the primary key for this relation and there are no other fields
+
+		Athlete_Game:
+			athleteId, gameId --> points, rebounds, assists, steals, blocks, turnovers
+			athleteId, gameId is a superkey for this relation.
+
+	List of Multivalued Dependencies:
+		There are actually no multivalued dependencies in any of my relations.
+
+		School: there is only going to be one record with a specific schoolId
+
+		Athlete: there is only going to be one record with a specific athleteId
+
+		Game: there is only going to be one record with a specific gameId
+
+		League: there is only going to be one record with a specific leagueId
+
+		Users: there is only going to be one record with a specific userId
+
+		Team: there is only going to be one record with a specific teamId
+
+		Athlete_Team: An athlete can be on many fantasy teams, but an athlete cannot be on the same fantasy team twice.
+			athleteId, teamId is the primary key for this relation.
+
+		Athlete_Game: there is only going to be one record with a specific athleteId, gameId because an athlete cannot play in the same
+		game twice.
+
+	This shows that my database schema and relations are in 4NF form.

@@ -1,17 +1,18 @@
 Final Project Vision Statement - Ethan Clark
 
-	For my information system project, I am thinking of creating a student-athlete database for Calvin Athletics. I want to be
-	able to list the students for the sports teams at Calvin College, some of the individuals statistics for their respective
-	sports, schedules for those teams, coach's information, recruits, and even maybe some academic information (because Calvin
-	is very focused on the STUDENT-athlete portion). I think this database information system would be complex enough to require
-	numerous tables and relationships. I think this database would be different in the sense that it would combine aspects of
-	athletics that are separate and hard to connect to date, as in academics, recruiting, schedules, and team and player
-	statistics.
+	For my information system project, I am thinking of creating a database to store information regarding a MIAA Basketball Conference
+	fantasy league. In this fantasy league, users will get to create a user and join a league to play against other users. Each user
+	will only be allowed to be in one league and have only one team. This database will hold information regarding the players in the
+	MIAA conference as well as the schools that each player belongs to. Each game the players play in will produce statistics (good
+	things like points, rebounds, assists, blocks, steals, but also bad things like turnovers). I am also storing GPA for academic
+	purposes because Division 3 schools really pride themselves on academic standards, so we can track things like eligibility for
+	these players. I think I will start out with getting information on only a couple players for each time because there are 15
+	players on Calvin's team alone, so that would be a lot of data to get every player on every team to start. I will try and get more
+	player data as the semester goes along, but for the second project deliverable, I am going to focus on the ERD design and schema of
+	my database.
 
-	Users for this database could vary in respect to what they would need to be looking at. An overall view of this database
-	would be useful for the athletic administration to get information regarding any athlete or team at any time. Users could
-	also be coaches, who could focus on their team information or they could use this to store information regarding potential
-	recruits. Athletes could use this database to track their statistics for a specific season or sport, or even for their whole
-	career, and they could track and store workout information in the database as well. Even those that work for the facility of
-	Van Nord Arena could use this to look up team's schedules and know when different teams would be playing in the gym or the
-	sports facilities around Calvin.
+	The likely users of this database will most likely be college students that are attending those schools in the MIAA conference.
+	This would be a good way to have some fun with friends at your own college, or even have some cross-school challenges in this MIAA
+	fantasy basketball league. This database will also be useful for players or coaches or fans who would want to track how an
+	individual player is doing by taking a look at the statistics for that player. Fans of any team in the MIAA would have a good time
+	using this database, whether to play with fantasy teams or to check out statistics.
