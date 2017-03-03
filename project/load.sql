@@ -2,11 +2,8 @@
 -- Ethan Clark - CS 342
 
 -- Drop the previous table declarations.
-@&athlete\drop         
-commit;
+@drop         
 -- Reload the table declarations.
-@&athlete\schema
-commit;
+@schema
 -- Load the table data.
-@&athlete\data
-commit;
+@data

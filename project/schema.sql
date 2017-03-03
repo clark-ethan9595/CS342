@@ -5,43 +5,44 @@ CREATE TABLE School (
 	schoolId integer PRIMARY KEY,
 	name varchar(50),
 	city varchar(30),
-	state varchar(2)
+	state_char varchar(2)
 );
 
 CREATE TABLE Athlete (
 	athleteId integer PRIMARY KEY,
 	firstName varchar(15),
-	lastName varchar(20).
+	lastName varchar(20),
 	city varchar(30),
-	state varchar(2),
+	state_char varchar(2),
 	GPA float,
-	class varchar(10),
+	grade varchar(10),
 	position varchar(10),
 	schoolId integer,
-	FOREIGN KEY schoolId REFERENCES School(schoolId)
+	FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
 
-CREATE TABLE Match (
-	matchId integer PRIMARY KEY,
+CREATE TABLE Game (
+	gameId integer PRIMARY KEY,
 	matchDate date,
 	homeSchoolId integer,
 	awaySchoolId integer,
-	FOREIGN KEY homeSchoolId REFERENCES School(schoolId),
-	FOREIGN KEY awaySchoolId REFERENCES School(schoolId)
+	FOREIGN KEY (homeSchoolId) REFERENCES School(schoolId),
+	FOREIGN KEY (awaySchoolId) REFERENCES School(schoolId)
 );
 
 CREATE TABLE League (
 	leagueId integer PRIMARY KEY,
 	leagueName varchar(30),
-	startDate date,
+	startDate date
 );
 
-CREATE TABLE User (
+CREATE TABLE Users (
 	userId integer PRIMARY KEY,
+	userName varchar(30),
 	firstName varchar(15),
 	lastName varchar(20),
 	leagueId integer,
-	FOREIGN KEY leagueId REFERENCES League(leagueId)
+	FOREIGN KEY (leagueId) REFERENCES League(leagueId)
 );
 
 CREATE TABLE Team (
@@ -52,28 +53,28 @@ CREATE TABLE Team (
 	ties integer,
 	userId integer,
 	leagueId integer,
-	FOREIGN KEY userId REFERENCES User(userId),
-	FOREIGN KEY leagueId REFERENCES League(leagueId)
+	FOREIGN KEY (userId) REFERENCES Users(userId),
+	FOREIGN KEY (leagueId) REFERENCES League(leagueId)
 );
 
 CREATE TABLE Athlete_Team (
 	teamId integer,
 	athleteId integer,
-	PRIMARY KEY (studentId, teamId),
-	FOREIGN KEY studentId REFERENCES Student_Athlete(studentId),
-	FOREIGN KEY teamId REFERENCES Team(teamId)
+	PRIMARY KEY (teamId, athleteId),
+	FOREIGN KEY (athleteId) REFERENCES Athlete(athleteId),
+	FOREIGN KEY (teamId) REFERENCES Team(teamId)
 );
 
-CREATE TABLE Athlete_Match (
-	matchId integer,
+CREATE TABLE Athlete_Game (
+	gameId integer,
 	athleteId integer,
 	points integer,
 	rebounds integer,
 	assists integer,
 	steals integer,
-	blocks integer
+	blocks integer,
 	turnovers integer,
-	PRIMARY KEY (matchId, athleteId),
-	FOREIGN KEY matchId REFERENCES Match(matchId),
-	FOREIGN KEY athleteId REFERENCES Athlete(athleteId)
+	PRIMARY KEY (gameId, athleteId),
+	FOREIGN KEY (gameId) REFERENCES Game(gameId),
+	FOREIGN KEY (athleteId) REFERENCES Athlete(athleteId)
 );

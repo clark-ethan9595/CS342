@@ -24,6 +24,4 @@ GRANT
 -- Connect to the user's account/schema.
 CONNECT athlete/elc3;
 
--- Create the database.
-DEFINE athlete=S:\CS342\project
-@&athlete\load
+@load
