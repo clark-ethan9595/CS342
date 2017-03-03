@@ -1,12 +1,12 @@
--- Load the Calvin Student-Athlete database. 
+-- Load the MIAA Fantasy Basketball database. 
 -- Ethan Clark - CS 342
 
 -- Drop the previous table declarations.
-@&studathlete\drop         
+@&athlete\drop         
 commit;
 -- Reload the table declarations.
-@&studathlete\schema
+@&athlete\schema
 commit;
 -- Load the table data.
-@&studathlete\data
+@&athlete\data
 commit;

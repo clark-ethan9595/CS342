@@ -3,10 +3,54 @@ Homework04 Text File
 Ethan Clark - CS 342
 
 1. Do exercise 14.31
-	a. Consider only 1NF, BCNF, and 4NF. Ignore 2NF and 3NF.
+	- Consider only 1NF, BCNF, and 4NF. Ignore 2NF and 3NF.
+
+	a. This relation is in 1NF because the domains of the attributes are only atomic values, they do not allow for multiple values (a list of values) within any given attribute.
+
+	The key for this relation is Book_title, Author_name because this is the only way to completely distinguish records from this
+	relation from each other. Because of this, all the functional dependencies listed
+		Book_title -> Publisher, Book_type
+		Book_type -> List_price
+		Author_name -> Author_affil
+	all fail to pass the BCNF condition that all left hand sides of the functional dependencies must be a superkey of the
+	relation. Hence, this relation is NOT in BCNF.
+
+	Because this relation is not in BCNF, it is not in 4NF either. A functional dependency is a special kind of multivalued
+	dependency, and since we have functional dependencies that their LHS is not a superkey of the relation, there are technically
+	mutlivalued dependencies that have their LHS not a superkey of the relation either.
+
+	b. BCNF Decomposition:
+		Book_Part1(Book_title, Author_name)
+		Book_Part2(Book_title, Publisher, Book_type)
+		Book_Part3(Book_type, List_price)
+		Book_Part4(Author_name, Author_affil)
+	Now, looking at those functional dependencies again, we can see that each LHS of those dependencies appear as a superkey
+	within their respective relations. Book_Part1 allows for multiple authors for an individual book, so the primary key for that
+	relation is (Book_title, Author_name). The primary key for Book_Part2 is Book_title. The primary key for Book_Part3 is
+	Book_type. And finally the primary key for Book_Part4 is Author_name. All functional dependencies now have a superkey of
+	their relation on the LHS.
 
 2. Do exercise 14.35. Make the following (potentially counter-intuitive) assumptions.
-	a. Book_name and edition functionally determine year, but not vice-versa.
-	b. The title and coauthor names stay the same from edition to edition.
+	- Book_name and edition functionally determine year, but not vice-versa.
+	- The title and coauthor names stay the same from edition to edition.
 
-	Your justification of the MVD can be informal, one-to-two sentence explanation.
+	- Your justification of the MVD can be informal, one-to-two sentence explanation.
+
+	a. The only possible candidate key is (Book_Name, Author, Edition). Because we can assume that Book_Name, Edition --> Year,
+	Year is out of the equation as part of the candidate key. This candidate key is the only way to uniquely identify relations
+	from each other from within the table.
+
+	b. As shown in the sample data of this relation, there can be multiple authors and multiple editions to any given Book_name.
+	This can be seen through the redundant values in the tuples that are made up from the records of the database. The Book_Name
+	and Edition and Copyright_Year are all repeated just because of the multiple authors.
+
+	c. The decomposition of this relation would be into:
+		BOOK_PART1(Book_Name, Author)
+		BOOK_PART2(Book_Name, Edition, Copyright_Year)
+
+	Both of these relations are in BCNF and 4NF. The functional dependencies now are:
+		Book_Name, Edition -> Copyright_Year 		for the second relation...
+	Book_Name, Author is the key in the first relation, so there are no functional dependencies in that relation. Book_Name,
+	Edition is the key in the second relation, so the LHS side of the one functional dependency is a superkey of its relation.
+	This means that these relations are in BCNF.
+	There are no multivalued dependencies in either of the relations, so this means that the relations are also in 4NF.

@@ -9,7 +9,7 @@
 -- Spring, 2017
 -- kvlinden
 
-drop table AltPerson;
+DROP TABLE AltPerson;
 
 CREATE TABLE AltPerson (
 	personId integer,
@@ -71,3 +71,39 @@ INSERT INTO AltPerson VALUES (3, 'Jeff', 'm', NULL, NULL, NULL, 'deacons', 'chai
 --			personId, teamId -> role, time
 --		personId is a superkey for the Person relation, teamId is a superkey for the Team relation,
 --		and personId, teamId is a superkey for the Person_Team relation.
+
+-- c.
+-- Creating new normalized sub-relations
+
+DROP TABLE Person_Team;
+DROP TABLE Team;
+DROP TABLE Person;
+
+CREATE TABLE Person (
+	personId integer PRIMARY KEY,
+	name varchar(10),
+	status char(1),
+	mentorId integer,
+	FOREIGN KEY (mentorId) REFERENCES Person(personId)
+);
+
+CREATE TABLE Team (
+	teamName varchar(10)
+);
+
+CREATE TABLE Person_Team (
+	teamName varchar(10),
+	personId varchar(10),
+	teamRole varchar(10),
+    teamTime varchar(10)
+	FOREIGN KEY (teanName) REFERENCES Team(teamName),
+	FOREIGN KEY (personId) REFERENCES Person(personId)
+);
+
+INSERT INTO Person SELECT DISTINCT personId, name, status, mentorId FROM AltPerson;
+INSERT INTO Team SELECT DISTINCT teamName FROM AltPerson;
+INSERT INTO Person_Team SELECT DISTINCT teamName, personId, teamRole, teamTime FROM AltPerson;
+
+SELECT * FROM Person;
+SELECT * FROM Team;
+SELECT * FROM Person_Team;

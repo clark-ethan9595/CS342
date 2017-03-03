@@ -1,11 +1,11 @@
--- Create the Calvin Student-Athlete user and database. 
+-- Create the MIAA Fantasy Basketball user and database. 
 -- Ethan Clark - CS 342
 
 -- Create the user.
 
-DROP USER studathlete CASCADE;
+DROP USER athlete CASCADE;
 
-CREATE USER studathlete 
+CREATE USER athlete 
 	IDENTIFIED BY elc3
 	QUOTA 5M ON System;
 
@@ -19,11 +19,11 @@ GRANT
 	CREATE PROCEDURE,
 	CREATE TRIGGER,
 	UNLIMITED TABLESPACE
-	TO cpdb;
+	TO athlete;
 
 -- Connect to the user's account/schema.
-CONNECT studathlete/elc3;
+CONNECT athlete/elc3;
 
 -- Create the database.
-DEFINE studathlete=S:\CS342\project
-@&studathlete\load
+DEFINE athlete=S:\CS342\project
+@&athlete\load

@@ -63,3 +63,21 @@ WHERE pt.personName = pv.personName;
 --		want all the data to appear in a single table every time, then this single relation view would be best. But
 --		that must take into consideration that single relation is not in 4NF form, if one desired to conform to that
 --		kind of normal form.
+
+
+-- d.
+-- Creating a new table to store the data queried by the combined "view" query
+DROP TABLE Person;
+
+CREATE TABLE Person (
+	personName varchar(10),
+    teamName varchar(10),
+    personVisit date
+);
+
+INSERT INTO Person
+SELECT pt.personName, pt.teamName, pv.personVisit
+FROM PersonTeam pt, PersonVisit pv
+WHERE pt.personName = pv.personName;
+
+SELECT * FROM Person;
