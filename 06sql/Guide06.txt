@@ -1,0 +1,74 @@
+As in the last unit, work through the following materials writing one sample query for each mechanism using the modified version of
+the movies database (see code/06sql/guide06.sql)
+
+	1. Advanced SQL (Section 7.1, continued) - Write sample queries that:
+		a. Implement an inner join (Section 7.1.6).
+			i. The default type of join in a joined table is called an inner join, where a tuple is included in the result only if a
+			matching tuple exists in the other relation (don't need the keyword INNER because it is the default kind of join).
+			ii. Book Example: Query 8A
+				1) SELECT E.Lname AS Employee_name, S.Lname AS Supervisor_name
+				FROM EMPLOYEE AS E, EMPLOYEE AS S
+				E.Super_ssn = S.Ssn;
+			iii. Book Example 2: Query 1A (section 7.1.6)
+				1) SELECT Fname, Lname, Address
+				FROM (EMPLOYEE JOIN DEPARTMENT ON Dno = Dnumber)
+				WHERE Dname = 'Research';
+			iv. Movies Database Example:
+				1) SELECT P.firstName, P.lastName
+				FROM (Performer AS P JOIN Casting AS C ON id = performerId)
+				WHERE C.status = 'star';
+			
+		b. Implement an outer join (Section 7.1.6).
+			i. If the user requires that all employees be included, a different type of join called outer join must be used
+			explicitly.
+			ii. Relational Algebra definition of Outer Join: a set of operations were developed for the case where the user wants to
+			keep all the tuples in R, or all those in S, or all those in both relations in the result of the JOIN, regardless of
+			whether or not they have matching tuples in the other relation.
+			iii. Book Example: Query 8B
+				1) SELECT E.Lame AS Employee_name, S.Lname AS Supervisor_name
+				FROM (Employee AS E LEFT OUTER JOIN EMPLOYEE AS S ON E.Super_ssn = S.Ssn);
+			iv. In SQL, the options available for specifying joined tables include INNER JOIN (only pairs of tuples that match the
+			join condition are retrieved, same as JOIN), LEFT OUTER JOIN (every tuple in the left table must appear in the result; if
+			it does not have a matching tuple, it is padded with NULL values for the attributes of the right table), RIGHT OUTER JOIN
+			(every tuple in the right must appear in the result; if it does not have a matching tuple, it is padded with NULL values
+			for the attributes of the left table), and FULL OUTER JOIN.
+				1) In the latter three options, the keyword OUTER may be omitted. If the join attributes have the same name, one can
+				also specify the natural join variation of outer joins by using the keyword NATURAL before the operation.
+			v. Movies Database Example:
+				1) SELECT P.firstName, P.lastName, C.status
+				FROM (Performer AS P LEFT OUTER JOIN Casting AS C ON P.id = C.performerId);
+			
+		c. Use an aggregate function (Section 7.1.7).
+			i. Aggregate functions in SQL are used to summarize information from multiple tuples into a single-tuple summary.
+			ii. A number of built-in aggregate functions exist: COUNT, SUM, MAX, MIN, and AVG.
+			iii. Book Example: Query 19
+				1) SELECT SUM(Salary), MAX(Salary), MIN(Salary), AVG(Salary)
+				FROM EMPLOYEE;
+			iv. Movies Database Example:
+				1) SELECT MAX(votes) FROM Movie;
+				
+		d. Use grouping (Section 7.1.8).
+			i. Grouping is used to create subgroups of tuples before summarization.
+			ii. In many cases we want to apply the aggregate functions to subgroups of tuples in a relation, where the subgroups are
+			based on some attribute values.
+				1) For example, we may want to find the average salary of employees in each department or the number of employees who
+				work on each project.
+				2) In these cases, we need to partition the relation into nonoverlapping subsets (or groups) of tuples.
+				3) Each group (partition) will consist of the tuples that have the same value of some attribute(s), called the
+				grouping attributes.
+				4) We can they apply the function to each such group independently to produce summary information about each group.
+					a) SQL has a GROUP BY clause for this purpose.
+					b) The GROUP BY clause specifies the grouping attributes, which should also appear in the SELECT clause, so that
+					the value resulting from applying each aggregate function to a group of tuples appears along with the value of
+					the grouping attribute(s).
+			iii. Book Example: Query 24
+					a) For each department, retrieve the department number ,the number of employees in the department, and their
+					average salary.
+					b) SELECT Dno, Count (*), AVG (Salary)
+					FROM EMPLOYEE
+					GROUP BY Dno;
+			iv. Movie Database Example:
+				1) SELECT P.firstName, P.lastName
+				FROM Movie AS M, Performer AS P, Casting AS C
+				WHERE M.id = C.movieId AND P.id = C.performerId AND C.status = 'extra'
+				GROUP BY M.title;
