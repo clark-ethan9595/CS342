@@ -5,8 +5,9 @@
 
 -- Exercise 6.2
 -- a.
--- Yes, this aggregate function does group by birthdate.
---
+-- Yes, this aggregate function does group the entire Person table in the FROM clause.
+-- Aggregate functions in the select clause are applied to all of the rows in the queried table.
+--		So we are not grouping by a particular attribute, but rather by the queried table/view.
 SELECT AVG(TRUNC(MONTHS_BETWEEN(sysdate, P.birthdate)/12)) AS Average_Age
 FROM Person P;
 
