@@ -1,0 +1,18 @@
+As in the last unit, work through the following materials writing one sample query for each mechanism using the modified version of the movies database (see code/07sql/guide07.sql
+
+	1. View (Section 7.3 for Monday)
+		a. Write a simple view specification. For details on Oracle view, see Managing Views.
+		b. Define the following terms (in the comments of your SQL command file.
+			i. Base Tables:
+			ii. Join Views:
+			iii. Updatable Join Views:
+			iv. Key-Preserved Tables:
+			v. View that are implemented via query modification vs. materialization. (For details on Oracle materialization, see Materialized View Concepts and Architecture, focusing on the "What is a Materialized View?" and "Why Use Materialized Views?" sections.)
+	2. Formal Languages for the Relational Model (Chapter 8 for Wednesday)
+		a. Relational Algebra (read Sections 8.1-8.3 & 8.5) - Write a simple query on the movies database using SELECT (σ condtion), PROJECT (π fieldlist), RENAME (ρ newName) and JOIN (∞ condition) (see example queries 1 & 2 in Section 8.5).
+		b. Tuple Relational Calculus (read Sections 8.6.1 - 8.6.3 & 8.6.8) - Write a simple query on the movies database using the tuple relational calculus queries (see example queries 0 & 1 in Section 8.6.4).
+		c. Define the following terms:
+			i. Existential and Universal Quantifiers (see Section 8.6.3).
+			ii. Safe expressions (see Section 8.6.8).
+
+Write your solutions either in ASCII (e.g., SELECT_condition), Unicode (e.g., σ condition) or using hand-writing.
