@@ -1,18 +1,109 @@
-As in the last unit, work through the following materials writing one sample query for each mechanism using the modified version of the movies database (see code/07sql/guide07.sql
+As in the last unit, work through the following materials writing one sample query for each mechanism using the modified version of
+the movies database (see code/07sql/guide07.sql
 
 	1. View (Section 7.3 for Monday)
+	
 		a. Write a simple view specification. For details on Oracle view, see Managing Views.
+			i. A view in SQL terminology is a single table that is derived from other tables.
+			ii. In SQL, the command to specify a view is CREATE VIEW.
+				1) The view is given a (virtual) table name (or view name), a list of attribute names, and a query to specify the
+				contents of the view.
+			iii. If we do not need a view anymore, we can use the DROP VIEW command to dispose of it.
+			iv. Simple View Specification:
+				CREATE VIEW SIMPLE_MOVIE AS
+				SELECT M.id, M.title, M.score
+				FROM Movie M
+				WHERE M.year = 2000;
+			v. Join View Specification:
+				CREATE VIEW MOVIE_CAST
+				AS SELECT  M.title, M.year, P.firstName, P.lastName, C.status
+					FROM Performer P, Movie M, Casting C
+					WHERE P.id = C.performerId AND M.id = C.movieId
+					GROUP BY M.title;
+					
 		b. Define the following terms (in the comments of your SQL command file.
-			i. Base Tables:
-			ii. Join Views:
-			iii. Updatable Join Views:
-			iv. Key-Preserved Tables:
-			v. View that are implemented via query modification vs. materialization. (For details on Oracle materialization, see Materialized View Concepts and Architecture, focusing on the "What is a Materialized View?" and "Why Use Materialized Views?" sections.)
+			i. Base Tables: a table whose tuples are always physically stored in the database.
+			ii. Join Views: a view that specifies more than one base table or view in the FROM clause.
+			iii. Updatable Join Views: a view that contains more than one table in the top-level FROM clause of the SELECT statement,
+			and is not restricted to be read only. 
+				1) UPDATE, INSERT, and DELETE are all allowed on the view.
+				2) IN SQL, the clause WITH CHECK OPTION should be added at the end of the view definition if a view is to be updated
+				by INSERT, DELETE, or UPDATE statements. This allows the system to reject the operations that violate the SQL rules
+				for view updates.
+			iv. Key-Preserved Tables: a table is key-preserved if every key of the table can also be a key of the result of the join.
+				1) Not a property of the data in the table, but of the schema.
+			v. View that are implemented via query modification vs. materialization. (For details on Oracle materialization, see
+			Materialized View Concepts and Architecture, focusing on the "What is a Materialized View?" and "Why Use Materialized
+			Views?" sections.)
+				1) The problem of how a DBMS can efficiently implement a view for efficient querying is complex.
+				2) Two main approaches have been suggested.
+					a) One strategy, called query modification, involves modifying or transforming the view query (submitted by the
+					user) into a query on the underlying base tables.
+						i) The disadvantage of this approach is that it is inefficient for views defined via complex queries that are
+						time-consuming to execute, especially if multiple view queries are going to be applied to the same view within
+						a short period of time.
+					b) The second strategy, called view materialization, involves physically creating a temporary or permanent view
+					table when the view is first queried or created and keeping that table on the assumption that other queries on the
+					view will follow.
+						i) In this case, an efficient strategy for automatically updating the view table when the base tables are
+						updated must developed in order to keep the view up-to-date.
+			
 	2. Formal Languages for the Relational Model (Chapter 8 for Wednesday)
-		a. Relational Algebra (read Sections 8.1-8.3 & 8.5) - Write a simple query on the movies database using SELECT (σ condtion), PROJECT (π fieldlist), RENAME (ρ newName) and JOIN (∞ condition) (see example queries 1 & 2 in Section 8.5).
-		b. Tuple Relational Calculus (read Sections 8.6.1 - 8.6.3 & 8.6.8) - Write a simple query on the movies database using the tuple relational calculus queries (see example queries 0 & 1 in Section 8.6.4).
+	
+		a. Relational Algebra (read Sections 8.1-8.3 & 8.5) - Write a simple query on the movies database using SELECT (σ condition),
+		PROJECT (π fieldlist), RENAME (ρ newName) and JOIN (∞ condition) (see example queries 1 & 2 in Section 8.5).
+			i. The SELECT operation is used to choose a subset of the tuples from a relation that satisfies a selection condition.
+				1) The SELECT operation can also be visualized as a horizontal partition of the relation into two sets of tuples -
+				those tuples that satisfy the condition and are selected, and those tuples that do not satisfy the condition and are
+				filtered out.
+				2) Unary operator
+				3) Example: Select all movies that were made in the year 2000.
+					σ year=2000 (Movie)
+			ii. The PROJECT operation selects certain columns from the table and discards the other columns.
+				1) If we are interested in only certain attributes of a relation, we use the PROJECT operation to project the relation
+				over these attributes only.
+				2) Unary operator
+				3) Example: Get the title and year of all movies from the Movie relation.
+					π title, year (Movie)
+			iii. We can also define a formal RENAME operation - which can rename either the relation name or the attribute names, or 
+			both - as a unary operator.
+				1) Example: Renaming the Casting table as Cast_List.
+					ρ Cast_List (Casting)
+			iv. The JOIN operation is used to combine related tuples from two relations into single "longer" tuples.
+				1) This operation is very important for any relational database with more than a single relation because it allows us
+				to process relationships among relations.
+				2) Binary operator
+				3) Example: Join the Performer and Casting relations on id = performerId into the relation Performer_Casting.
+					Performer_Casting <-- Performer ∞ id=performerId Casting
+			v. Example using all four of these operators: Select the first name, last name, and status of all performers in movies
+			that were made in the year 2000, renaming the status attribute as role.
+				2000_Movies <-- σ year=2000 (Movie)
+				Movies_Cast <-- (2000_Movie ∞ id=movieId Casting)
+				2000_Cast <-- (Movies_Cast ∞ id=performerId Performer)
+				RESULT <-- π title, firstName, lastName, status (2000_CAST)
+				ρ title, firstName, lastName, role (RESULT)
+		
+		b. Tuple Relational Calculus (read Sections 8.6.1 - 8.6.3 & 8.6.8) - Write a simple query on the movies database using the
+		tuple relational calculus queries (see example queries 0 & 1 in Section 8.6.4).
+			i. A calculus expression specifies what is to be retrieved rather than how to retrieve it. Therefore, the relational
+			calculus is considered to be a nonprocedural language.
+			ii. The tuple relational calculus is based on specifying a number of tuple variables. Each tuple variable usually ranges
+			over a particular database relation, meaning that the variable may take as its value any individual tuple from that
+			relation.
+			iii. Example Query: Get the first name and last name of all performers who performed as the star in a movie.
+				{t.firstName, t.lastName | Performer(t) AND (Ǝc)(Casting(c) AND c.performerId = t.id AND c.status = 'star')}
+		
 		c. Define the following terms:
 			i. Existential and Universal Quantifiers (see Section 8.6.3).
+				1) Existential Quantifier: this formula is TRUE if there exists some tuple that makes the formula TRUE.
+					a) Ǝ symbol
+				2) Universal Quantifier: this formula is TRUE if every possible tuple that can be assigned to the free tuple t, and
+				results to TRUE for every such tuple substitution.
+					a) Ɐ symbol
 			ii. Safe expressions (see Section 8.6.8).
+				1) Safe Expression: in relational calculus is one that is guaranteed to yield a finite number of tuples as its
+				result; otherwise, the expression is called unsafe.
+					a) Example: {t | NOT (EMPLOYEE(t))} is unsafe because it yields all tuples in the universe that are not EMPLOYEE
+					tuples, which are infinitely numerous.
 
 Write your solutions either in ASCII (e.g., SELECT_condition), Unicode (e.g., σ condition) or using hand-writing.
