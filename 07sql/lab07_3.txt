@@ -6,5 +6,7 @@ March 17, 2017
 Exercise 7.3
 
 a.
+	π firstName, lastName, birthdate (σ birthdate >= 1961 AND birthdate <= 1975 (Person))
 
 b.
+	{t.firstName, t.lastName, t.birthdate | Person(t) AND t.birthdate >= 1961 AND t.birthdate <= 1975}
