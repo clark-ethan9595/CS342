@@ -2,3 +2,189 @@ Guide 08
 CS 342
 Ethan Clark
 March 26, 2017
+
+Work through the following materials this week, making sure that you can do the given activities.
+
+	1. Read Sections 10.1, 10.4.1, & 26.1.1 - 26.1.2:
+		a. Name the three basic approaches to database programming.
+			i. Embedding database commands in a general-purpose programming language.
+				1) In this approach, database statements are embedded into the host programming language, but they are identified by a
+				special prefix.
+				2) A precompiler or preprocessor scans the source program to identify database statements and extract them for
+				processing by the DBMS.
+					a) They are replaced in the program by function calls to the DBMS-generated code. This technique is generally
+					referred to as embedded SQL.
+			ii. Using a library of database functions or classes.
+				1) A library of functions is made available to the host programming language for database calls.
+				2) This approach provides what is known as an application programming interface (API) for accessing a database from
+				application programs.
+				3) For object-oriented programming languages, a class library is used.
+			iii. Designing a brand-new language.
+				1) A database programming language is designed from scratch to be compatible with the database model and query language.
+				2) Additional programming structures such as loops and conditional statements are added to the database language to
+				convert it into a full-fledged programming language.
+				3) Example:
+					a) PL/SQL
+					
+		b. Explain the concepts of:
+			i. Impedance Mismatch:
+				1) This is the term used to refer to the problems that occur because of differences between the database model and the
+				programming language model.
+					a) The first problem that may occur is that the data types of the programming language differ from the attribute
+					data types that are available in the data model.
+						i) Hence, it is necessary to have a binding for each host programming language that specifies for each attribute
+						type the compatible programming language types. A different binding is needed for each programming language
+						because different languages have different data types.
+					b) Another problem occurs because the results of most queries are sets or multisets of tuples (rows), and each tuple
+					is formed of a sequence of attribute values.
+						i) In the program, it is often necessary to access the individual data values within individual tuples for
+						printing or processing.
+						ii) Hence, a binding is needed to map the query result data structure, which is a table, to an appropriate data
+						structure in the programming language. A mechanism is needed to loop over the tuples in a query result in order
+						to access a single tuple at a time and to extract individual values from the tuple.
+				2) Impedance mismatch is less of a problem when a special database programming language is designed that uses the same
+				data model and data types as the database model.
+					a) One example of this is Oracle's PL/SQL.
+			ii. Stored Procedures:
+				1) Program modules that are stored by the DBMS at the database server.
+				2) The machine where the program is executing is different from the machine on which the database server - and the main
+				part of the DBMS software package - is located. Although this is suitable for many applications, it is sometimes useful
+				to create database program modules - procedures or functions - that are stored and executed by the DBMS at the database
+				server.
+					a) These are historically known as database stored procedures, although they can be functions or procedures.
+				3) Stored procedures are useful in the following circumstances:
+					a) If a database program is needed by several applications, it can be stored at the server and invoked by any of the
+					application programs. This reduces duplication of effort and improves software modularity.
+					b) Executing a program at the server can reduce data transfer and communication cost between the client and server
+					in certain situations.
+					c) These procedures can enhance the modeling power provided by views by allowing more complex types of derived data
+					to be made available to the database users via the stored procedures. Additionally, they can be used to check for
+					complex constraints that are beyond the specification power of assertions and triggers.
+				4) Parameters should have a parameter type that is one of the SQL data types. Each parameter should also have a
+				parameter mode, which is one of IN, OUT, or INOUT. These correspond to parameters whose values are input only, output 
+				returned) only, or both input and output, respectively.
+			iii. Triggers:
+				1) A technique for specifying certain types of active rules.
+				2) A rule in the ECA (event-condition-action) model has three components:
+					a) The event(s) that triggers the rule: These events are usually database update operations that are explicitly
+					applied to the database. However, in the general model, they could also be temporal events or other kinds of
+					external events.
+					b) The condition that determines whether the rule action should be executed: Once the triggering event has occurred,
+					an optional condition may be evaluated. If no condition is specified, the action will be executed once the event
+					occurs. If a condition is specified, it is first evaluated, and only if it evaluates to true will the rule action be
+					executed.
+					c) The action to be taken: The action is usually a sequence of SQL statements, but it could also be a database
+					transaction or an external program that will be automatically executed.
+				3) It is important to note the effect of the optional FOR EACH ROW clause, which signifies that the rule is triggered
+				separately for each tuple. This is known as row-level trigger. If this clause was left out, the trigger would be known
+				as a statement-level trigger and would be triggered once for each triggering statement.
+				4) In addition to creating rules, an active database system should allow users to activate, deactivate, and drop rules
+				by referring to their names.
+					a) A deactivated rule will not be triggered by the triggering event. This feature allows users to selectively
+					deactivate rules for certain periods of time when they are not needed.
+					b) The activate command will make the rule active again.
+					c) The drop command deletes the rule from the system.
+				5) A second issue concerns whether the triggered action should be executed before, after, instead of, or concurrently
+				with the triggering event.
+					a) A before trigger executes the trigger before executing the event that caused the trigger. IT can be used in
+					applications such as checking for constraint violations.
+					b) An after trigger executes the trigger after executing the event, and it can be used in applications such as
+					maintaining derived data and monitoring for specific events and conditions.
+					c) An instead of trigger executes the trigger instead of executing the event, and it can be used in applications
+					such as executing corresponding updates on base relations in response to an event that is an update of a view.
+				6) The rule condition evaluation is also known as rule consideration, since the action is to be executed only after
+				considering whether the condition evaluates to true or false. There are three main possibilities for rule consideration:
+					a) Immediate Consideration:
+						i) The condition is evaluated as part of the same transaction as the triggering event and is evaluated
+						immediately. This case can be further categorized into three options:
+							a. Evaluate the condition before executing the triggering event.
+							b. Evaluate the condition after executing the triggering event.
+							c. Evaluate the condition instead of executing the triggering event.
+					b) Deferred Consideration:
+						i) The condition is evaluated at the end of the transaction that included the triggering event. In this case,
+						there could be many triggered rules waiting to have their conditions evaluated.
+					c) Detached Consideration:
+						i) The condition is evaluated as a separate transaction, spawned from the triggering transaction.
+				7) One of the difficulties that may have limited the widespread use of active rules, in spite of their potential to
+				simplify database and software development, is that there are no easy-to-use techniques for designing, writing, and
+				verifying rules.
+					a) It is difficult to verify that a set of rules is consistent, meaning that two or more rules in the set do not
+					contradict one another.
+					b) It is also difficult to guarantee termination of a set of rules under all circumstances.
+			
+	2. Read Server-Side Programming: PL/SQL and Java. Focus on server-side programming, PL/SQL and triggers; skip the section on
+	"Overview of java in Oracle Database."
+		a. Compare and Contrast:
+			i. Procedural vs. Non-procedural Languages:
+				1) In a non-procedural language such as SQL, the set of data to be operated on is specified, but not the operations to
+				be performed or the manner in which they are to be carried out.
+					a) Example:
+					SELECT employee_id, department_id, last_name, salary FROM employees;
+				2) In a procedural language program, most statement execution depends on previous or subsequent statements and on
+				control structures, such as loops or conditional branches, that are not available in SQL.
+					a) Example:
+					Iterate through the resulting data from the example above.
+					
+			ii. Client-Side vs. Server Side database programming:
+				1) Use client-side programming to embed SQL statements in applications written in procedural languages such as C, C++,
+				Java
+					a) You can place SQL statements in source code and submit it to a precompiler of Java translator before compilation.
+					b) Alternatively, you can eliminate the precompilation step and use an API such as Java Database Connectivity (JDBC)
+					or Oracle Call Interface (OCI) to enable the application to interact with the database.
+				2) Use server-side programming to develop data logic that resides in the database.
+					a) An application can explicitly invoke stored subprograms (procedures and functions), written in PL/SQL 
+					pronounced P L sequel) or Java.
+					b) You can also create a trigger, which is named program unit that is stored in the database and invoked in response
+					to a specified event.
+					
+		b. Explain why one would want to do server-side programming using PL/SQL.
+			i. The principal benefit of server-side programming is that functionally built into the database can be deployed anywhere.
+			ii. The database and not the application determines the best way to perform tasks on a given operating system.
+			iii. Also, subprograms increase scalability by centralizing application processing on the server, enabling clients to reuse
+			code. Because subprogram calls are quick and efficient, a single call can start a compute-intensive stored subprogram,
+			reducing network traffic.
+			iv. Memory Allocation
+			v. Integrity
+			vi. Security with definer's rights procedures.
+			vii. Inherited privileges and schema context with invoker's right procedures.
+			
+		c. For each of the following code segments, identify the type of the database object and explain what it does:
+			i. CREATE PROCEDURE limited_count (limit IN integer) AS
+			BEGIN
+				FOR I IN 1..limit LOOP
+					dbms_output.put_line(i);
+				END LOOP;
+			END;
+				1) This is a procedure subprogram, which permits the caller to supply parameters that solves a specific problem or
+				performs related tasks and serves as a building block for modular, maintainable database applications.
+				2) This particular procedure, named limited_count, outputs the numbers 1 through whatever the caller sets as the limit
+				parameter.
+				
+			ii. BEGIN
+				dbms_output.put_line('Hello, PL/SQL!');
+			END;
+				1) This is an anonymous block, which is an unnamed, nonpersistent PL/SQL unit. Typical uses for anonymous blocks include:
+					a) Initiating calls to subprograms and package constructs
+					b) Isolating exception handling
+					c) Managing control by nesting code within other PL/SQL blocks.
+				2) Anonymous blocks do not have the typical code reuse that stored subprograms have.
+				3) This particular anonymous block simply outputs the phrase 'Hello, PL/SQL!'.
+				
+			iii. CREATE TRIGGER log_trigger
+				BEFORE INSERT OR UPDATE OF lastName ON PERSON
+				FOR each row
+			BEGIN
+				dbms_output.put_line('Hello, name change!');
+			END;
+				1) This is a trigger, which is compiled stored program unit, written in either PL/SQL or Java, that Oracle Database
+				invokes (fires) automatically whenver one of the following operations occurs:
+					a) DML statements on a particular table or view, issued by any user.
+					b) DDL statements issued either by a particular user or any user.
+					c) Database events
+				2) Advantages of triggers include:
+					a) Automatically generate derived column values
+					b) Prevent invalid transactions
+					c) Provide auditing and event logging
+					d) Record information about table access
+				3) This particular trigger is called and executed before an insert or update statement to lastName in the Person table.
+				It simply outputs 'Hello, name change!' before the given name is inserted or updated in the Person table.
