@@ -7,4 +7,24 @@ Exercise 3
 
 a.
 
+	Relational Algebra:
+		π employee_id, first_name, last_name, email, hire_date, department_name (Employees ∞ department_id = department_id Departments)
+
+	Tuple Calculus:
+		{e.employee_id, e.first_name, e.last_name, e.email, d.hire_date | Employees(e) ^ Departments(d) ^ e.department_id = d.department_id}
+
 b.
+
+	Relational Algebra:
+
+
+	Tuple Calculus:
+
+
+
+
+σ
+
+π
+
+∞
