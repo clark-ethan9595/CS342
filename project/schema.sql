@@ -40,9 +40,7 @@ CREATE TABLE Users (
 	userId integer PRIMARY KEY,
 	userName varchar(30),
 	firstName varchar(15),
-	lastName varchar(20),
-	leagueId integer,
-	FOREIGN KEY (leagueId) REFERENCES League(leagueId)
+	lastName varchar(20)
 );
 
 CREATE TABLE Team (

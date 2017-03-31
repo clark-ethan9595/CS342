@@ -15,16 +15,5 @@ a.
 
 b.
 
-	Relational Algebra:
-
-
 	Tuple Calculus:
-
-
-
-
-σ
-
-π
-
-∞
+		{e.employee_id, e.first_name, e.last_name | deptView(e) ^ e.department_name = 'Executive'}
