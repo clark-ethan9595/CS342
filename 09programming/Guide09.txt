@@ -194,14 +194,33 @@ Work through the following materials this week, making sure that you can do the 
 					b) Hence, planning of a good execution strategy may be a more accurate description than query optimization.
 		
 	3. Oracle's EXPLAIN PLAN
-		a. Load the small version of the Internet Movie DB defined in the repo (cs342/databases/imdb), configure the auto-trace
-		facility in SQL *Plus (SET SERVEROUTPUT ON; & SET AUTOTRACE ON;) and generate an execution plan for some simply query. What
-		is the execution plan operation used and what does that operation do?
+		a. Load the small version of the Internet Movie DB defined in the repo (cs342/databases/imdb), configure the auto-trace facility in SQL *Plus (
+		SET SERVEROUTPUT ON; & SET AUTOTRACE ON;) and generate an execution plan for some simply query. What is the execution plan operation used and
+		what does that operation do?
+			i. The query I used was
+			EXPLAIN PLAN FOR SELECT id, name FROM movie WHERE year = 20003;
+			ii. Then I used the statement
+			SELECT PLAN_TABLE_OUTPUT FROM TABLE (DBMS_XPLAN.DISPLAY());
+			to get the execution plan table data to show up.
+			iii. The operation that was used for my select statement was a TABLE ACCESS FULL. This is also known as full table scan.
+				1) It reads the entire table - all rows and columns - as stored on the disk.
+				
 		b. Explain at least the following operations (see Oracle Execution Plan Operations).
 			i. TABLE ACCESS FULL
+				1) This is also known as full table scan. Reads the entire table - all rows and columns - as stored on the disk.
+				2) Although multi-block read operations improve the speed of a full table scan considerably, it is still one of the most expensive
+				operations. Besides high IO rates, a full table scan must inspect all table rows so it can also consume a considerable amount of CPU
+				time.
 			ii. TABLE ACCESS BY INDEX
+				1) Retrieves a row from the table using the ROWID retrieved from the preceding index lookup.
 			iii. NESTED LOOPS
+				1) Joins two tables by fetching the result from one table and querying the other table for each row from the first.
 			iv. HASH JOIN
+				1) The hash join loads the candidate records from one side of the join into a hash table that is then probed for each row from the
+				other side of the join.
 			v. INDEX UNIQUE SCAN
-	For Oracle's reference documentation, see Database Performance Tuning Guide, particularly the "Using EXPLAIN PLAN" section. Note
-	that the text also explains these operations conceptually in Chapter 18.
+				1) The INDEX UNIQUE SCAN performs the B-tree  traversal only. The database uses this operation if a unique constraint ensures that the
+				search criteria will match no more than one entry.
+				
+	For Oracle's reference documentation, see Database Performance Tuning Guide, particularly the "Using EXPLAIN PLAN" section. Note that the text also
+	explains these operations conceptually in Chapter 18.
