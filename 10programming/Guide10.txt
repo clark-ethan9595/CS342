@@ -1,0 +1,178 @@
+Guide10.txt
+Ethan Clark
+CS 342
+April 9, 2017
+
+	1. Sections 20.1-20.4.1 & 20.6 - Explain the following.
+		a. Interleaving vs. Parallelism
+			i. Interleaving:
+				1) A single CPU can only execute at most one process at a time. However, multiprogramming operating systems execute some 
+				commands from one process, then suspend that process and execute some commands from the next process, and so on. A
+				process is resumed at the point where it was suspended whenever it gets its turn to use the CPU again. Hence, concurrent
+				execution of processes is actually interleaved.
+				2) Interleaving keeps the CPU busy when a process requires an input or output (I/O) operation, such as reading a block
+				from disk. The CPU is switched to execute another process rather than remaining idle during I/O time.
+				3) Interleaving also prevents a long process from delaying other processes.
+				4) Most of the theory concerning control in databases is developed in terms of interleaved concurrency.
+			ii. Parallelism:
+				1) If the computer system has multiple hardware processors (multiple CPUs), parallel processing of multiple processes is
+				possible, where multiple processes can run at the same exact time, each on its own CPU.
+				
+		b. The lost update and dirty read problems
+			i. Lost Update Problem
+				1) This problem occurs when two transactions that access the same database items have their operations interleaved in a
+				way that makes the value of some database items incorrect.
+					a) Suppose that transactions T1 and T2 are submitted at approximately the same time, and suppose that their
+					operations are interleaved as follows:
+						i) 				T1				T2
+									Read_item(X);	
+									X = X - N;	
+													Read_item(X);
+													X = X + M;
+									Write_item(X);	
+									Read_item(Y);	
+													Write_item(X);
+					b) The final value of X is incorrect because T2 reads the value of X before T1 changes it in the database, and hence
+					the updated value resulting from T1 is lost.
+			ii. Dirty Read Problem (Temporary Update)
+				1) This problem occurs when one transaction updates a database item and then the transaction fails for some reason.
+				Meanwhile, the updated item is accessed (read) by another transaction before it is changed back (or rolled back) to its
+				original value.
+					a) 			T1					T2
+							Read_item(X);	
+							X = X - N;	
+							Write_item(X);	
+												Read_item(X);
+												X = X + M;
+												Write_item(X);
+							Read_item(Y);	
+				2) T1 updates item X and then fails before completion, so the system must roll back X to its original value. Before it
+				can do so, however, transaction T2 reads the temporary value of X, which will not be recorded permanently in the
+				database because of the failure of T1. The value of item X that is ready by T2 is called dirty data because it has been
+				created by a transaction that has not completed and committed yet; hence, this problem is also known as the dirty read
+				problem.
+				
+		c. Transactions, including commits and rollbacks
+			i. A transaction is an executing program that forms a logical unit of database processing.
+				1) A transaction includes one or more database access operation - these can include insertion, deletion, modification 
+				update), or retrieval operations.
+				2) A transaction is an atomic unit of work that should either by completed in its entirety or not done at all. The
+				recovery manager of the DBMS needs to keep track of the following operations:
+					a) BEGIN_TRANSACTION - marks the beginning of transaction execution.
+					b) READ or WRITE - after this operations end, the system moves into the partially committed state, where checks can
+					be done on the updates.
+					c) END_TRANSACTION - this specifies that READ and WRITE transaction operations have ended and marks the end of
+					transaction execution. However, at this point it may be necessary to check whether the changes introduced by the
+					transaction can be permanently applied to the database (committed) or whether the transaction has to be aborted
+					because it violates serializability or for some other reason.
+					d) COMMIT_TRANSACTION - this signals a successful end of the transaction so that any changes (updates) executed by
+					the transaction can be safely committed to the database and will not be undone.
+					e) ROLLBACK (or ABORT) - this signals that the transaction has ended unsuccessfully, so that any changes or effects
+					that the transaction may have applied to the database must be undone.
+				3) A transaction reaches its commit point when all tis operation that access the database have been executed
+				successfully and the effect of all the transaction operations on the database have been recorded in the log. Beyond the
+				commit point, the transaction is said to be committed, and its effect must be permanently recorded in the database.
+				
+		d. The ACID properties
+			i. Transactions should possess several properties, often called the ACID properties; they should be enforced by the
+			concurrency control and recovery methods of the DBMS. The following are the ACID properties
+				1) Atomicity
+					a) A transaction is an atomic unit of processing; it should either be performed in its entirety or not performed at
+					all.
+				2) Consistency Preservation
+					a) A transaction should be consistency preserving, meaning that if it is completely executed from beginning to end
+					without interference from other transactions, it should take the database from one consistent state to another.
+				3) Isolation
+					a) A transaction should appear as though it is being executed in isolation from other transactions, even though many
+					transactions are executing concurrently. That is, the execution of a transaction should not be interfered with by
+					any other transactions executing concurrently.
+				4) Durability or Permanency
+					a) The changes applied to the database by a committed transaction must persist in the database. These changes must
+					not be lost because of any failure.
+					
+		e. Schedule
+			i. When transactions are executing concurrently in an interleaved fashion, then the order of execution of operations from
+			all the various transactions is known as a schedule (or history).
+				1) A schedule (or history) S of n transactions T1, T2, …, Tn is an ordering of the operations of the transactions.
+				Operations from different transactions can be interleaved in the schedule S.
+					a) However, for each transaction Ti that participates in the schedule S, the operations of Ti in S must appear in
+					the same order in which they occur in Ti. The order of operations in S is considered to be a total ordering, meaning
+					that for any two operations in the schedule, one must occur before the other. It is possible theoretically to deal
+					with schedules whose operations form partial orders, but we will assume for now total ordering of the operations in
+					a schedule.
+				2) Two operations in a schedule are said to conflict if they satisfy all three of the following conditions:
+					1. They belong to different transactions
+					2. They access the same item X
+					3. At least one of the operations is a write_item(X).
+				3) A schedule S of n transactions T1, T2, …, Tn is said to be a complete schedule if the following conditions hold:
+					1. The operations is S are exactly those operations in T1, T2, …, Tn, including a commit or abort operation as the
+					last operation for each transaction in the schedule.
+					2. For any pair of operations from the same transaction Ti, their relative order of appearance in s is the same as
+					their order of appearance in Ti.
+					3. For any two conflicting operations, one of the two must occur before the other in the schedule.
+					
+	2. Chapter 21 Introduction and Section 21.1 - Explain the following.
+		a. Lock
+			i. A lock is a variable associated with a data item that describes the status of the item with respect to possible
+			operations that can be applied to it.
+				1) Generally, there is one lock for each data item in the database.
+				2) Locks are used as a means of synchronizing the access by concurrent transactions to the database items.
+			ii. A binary lock can have two states or values: locked and unlocked (or 1 and 0, for simplicity).
+				1) Two operations, lock_item and unlock_item are used with binary locking. A transaction requests access to an item X by
+				first issuing a lock_item(X) operation. If LOCK(X) = 1, the transaction is forced to wait. If LOCK(X) = 0, it is set to
+				1 (the transaction locks the item) and the transaction is allowed to access item X. When the transaction is through
+				using the item, it issues an unlock_item(X) operation, which sets LOCK(X) back to 0 (unlocks the item) so that X may be
+				accessed by other transactions.
+				2) Hence, a binary lock forces mutual exclusion on the data item.
+				3) Notice the lock_item and unlock_item operations must be implemented as indivisible units (known as critical sections
+				in operating systems); that is, no interleaving should be allowed once a lock or unlock operation is started until the
+				operation terminates or the transaction waits.
+			iii. The system needs to maintain only these records for the items that are currently locked in a lock table, which could be
+			organized as a hash file on the item name.
+			
+		b. Two-phase locking
+			i. A transaction is said to follow the two-phase locking protocol if all locking operations (read_lock, write_lock) precede
+			the first unlock operation in the transaction.
+				1) Such a transaction can be divided into two phases: an expanding or growing (first) phase, during which new locks on
+				items can be acquired but none can be released; and a shrinking (second) phase, during which existing locks can be
+				released but no new locks can be acquired.
+			ii. It can be proved that, if every transaction in a schedule follows the two-phase locking protocol, the schedule is
+			guaranteed to be serializable, obviating the need to test for serializability of schedules.
+			iii. Need to be on the watch for Deadlock or Starvation of transactions.
+				1) Deadlock occurs when each transaction T in a set of two or more transactions is waiting for some item that is locked
+				by some other transaction T' in the set.
+					1. Hence, each transaction in the set is in a waiting queue, waiting for one of the other transactions in the set to
+					release the lock on an item.
+				2) Starvation occurs when a transaction cannot proceed for an indefinite period of time while other transactions in the
+				system continue normally.
+				
+	3. Review Oracle's Overview of Transaction Processing in PL/SQL (only; you can skip the other sections on this page) - Compare and
+	contrast the following.
+		a. SAVEPOINT, COMMIT, ROLLBACK [TO]
+			i. The COMMIT statement ends the current transaction, making any changes made during that transaction permanent and visible
+			to other users.
+				1) Transactions are not tied to PL/SQL BEGIN-END blocks. A block can contain multiple transactions, and a transaction
+				can span multiple blocks.
+				2) The optional COMMENT clause lets you specify a comment to be associated with a distributed transaction.
+			ii. The ROLLBACK statement ends the current transaction and undoes any changes made during the transaction.
+				1) If you make a mistake, such as deleting the wrong row from a table, a rollback restores the original data.
+				2) If you cannot finish a transaction because an exception is raised or a SQL statement fails, a rollback lets you take
+				corrective action and perhaps start over.
+			iii. The SAVEPOINT statement names and marks the current point in the processing of a transaction.
+				1) Savepoints let you roll back part of a transaction instead of the whole transaction. The number of active savepoints
+				for each session is unlimited.
+				2) When you rollback to a savepoint, any savepoints marked after that savepoint are erased.
+				3) If you mark a savepoint within a recursive subprogram, new instances of the SAVEPOINT statement are executed at each
+				level in the recursive decent, but you can only roll back to the most recently marked savepoint.
+				
+		b. LOCK TABLE vs FOR UPDATE
+			i. With the LOCK TABLE statement, you can explicitly lock entire tables.
+				1) Row share locks allow concurrent accesses to a table; they prevent other users from locking the entire table for
+				exclusive use.
+				2) Table locks are released when your transaction issues a commit or rollback.
+			ii. With the SELECT FOR UPDATE statement, you can explicitly lock specific rows of a table to make sure they do not change
+			after you have read them.
+				1) That way you can check which or how many rows will be affected by an UPDATE or DELETE statement before issuing the
+				statement, and no other application can change the rows in the meantime.
+				2) The optional NOWAIT tells Oracle not to wait if requested rows have been locked by another user. Control is
+				immediately returned to your program so that it can do other work before trying again to acquire the lock.
