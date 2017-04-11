@@ -1,0 +1,15 @@
+Lab10_2a_script2.txt
+Ethan Clark
+CS 342 - Lab10
+April 12, 2017
+
+Manually re-enact the well-known concurrency problems listed below. Note the following before you start.
+
+	- Use separate SQL*Plus sessions to simulate separate threads (as done in the previous exercise).
+	- Turn AUTOCOMMIT on, which allows you to demonstrate these concurrency problems at the SQL*Plus command-line.
+	- A good test transaction is to try to add 0.2 and/or subtract 0.1 from the rank of one of the movies. You can simulate “reading” the
+	current value by selecting it, modifying the value in your head and “writing” the value by updating the record.
+
+Exercise 10.2.a
+
+	- The lost update problem, cf. Figure 20.3.a.

@@ -1,0 +1,13 @@
+Lab10_3a_script1.txt
+Ethan Clark
+CS 342 - Lab10
+April 12, 2017
+
+Re-run the schedule(s) from the previous exercise, but this time use an appropriate locking mechanisms and transaction commands to
+ensure the ACID properties. You should turn AUTOCOMMIT back OFF for these exercises.
+
+As you run these schedules, be sure to test what each script knows and when it knows it.
+
+Exercise 10.3.a
+
+	- The lost update problem, cf. Figure 20.3.a.

@@ -1,0 +1,12 @@
+Lab10_1.txt
+Ethan Clark
+CS 342 - Lab10
+April 12, 2017
+
+Exericse 10.1
+
+Experiment a bit with some SQL*Plus sessions, making changes, exiting and restarting the session and then answer the following questions.
+
+	a. Does Oracle handle the transaction life-cycle (see Figure 20.4) with respect to starting and stopping SQL*Plus sessions?
+
+	b. Can we implement any of the ACID properties using START-TRANSACTION/SAVEPOINT/ROLLBACK/COMMIT?
