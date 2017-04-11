@@ -1,0 +1,8 @@
+Optimizations.txt
+Ethan Clark
+CS 342 - Final Project
+April 11, 2017
+
+Analyze one of your more complicated queries from project 3 with respect to physical DB and SQL optimizations. Make a copy of the query,
+	show the execution plan, explain why it’s appropriate for this query on your database, discussing the use of indexes and SQL
+	optimizations that you’ve made.
