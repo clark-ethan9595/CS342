@@ -5,6 +5,35 @@ April 12, 2017
 
 Exericse 10.1
 
+Session 1-----------------------Session 2-----------------------Comments
+Query the movie table.			Query the movie table.			Return the same result
+Delete a movie and query		Repeat the query.				I expect the first session will not have the deleted movie and the second session will have the deleted movie.
+	the modified table.
+Rollback and query.				Query.							Return the same result
+Add a new movie and query.		Query.							I expect the first session to have the new movie and the second session to not have the new movie.
+Commit.							Query.							Return the same result.
+
+
+Step 1: SELECT * FROM Movie;
+	Both returned 41 rows.
+
+Step 2: DELETE FROM Movie WHERE id = 238071;
+		SELECT * FROM Movie;
+	This happened just as I expected. The first session deleted the database and then returned only 40 rows from the movie table. The second session still returned 41 rows
+		for the movie table query.
+
+Step 3: ROLLBACK;
+		SELECT * FROM Movie;
+	This happened just as I expected. After doing the rollback command in the first session, the movie table query returned 41 rows for session 1 and session 2.
+
+Step 4: INSERT INTO Movie VALUES (4, 'Ethans Movie', 2017, 9, NULL);
+		SELECT * FROM Movie;
+	This happened just as I expected. I inserted a new movie in session 1 and the movie table query returned 42 rows, but the movie table query returned 41 rows still.
+
+Step 5: COMMIT;
+		SELECT * FROM Movie;
+	I committed in session 1 and then the movie table query returned 42 rows. The movie table query returned 42 rows in session 2 as well so they returned the same result.
+
 Experiment a bit with some SQL*Plus sessions, making changes, exiting and restarting the session and then answer the following questions.
 
 	a. Does Oracle handle the transaction life-cycle (see Figure 20.4) with respect to starting and stopping SQL*Plus sessions?
