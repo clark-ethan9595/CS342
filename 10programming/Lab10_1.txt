@@ -37,5 +37,19 @@ Step 5: COMMIT;
 Experiment a bit with some SQL*Plus sessions, making changes, exiting and restarting the session and then answer the following questions.
 
 	a. Does Oracle handle the transaction life-cycle (see Figure 20.4) with respect to starting and stopping SQL*Plus sessions?
+		I found that exiting out of a SQL*Plus session after inserting a record into the movie table automatically did the commit before exiting because I was then able to see
+			that movie record in my session 2.
+		I found that if I insert a movie record in a SQL*PLus session and then start up a new SQL*Plus session, the newly started session does not contain the newly inserted
+			record from the first session. I needed to commit the first session before that movie record was visible in the session 2.
+		Oracle does handle the transaction life-cycle with respect to starting and stopping SQL*Plus sessions. The end of a transaction goes into a partially committed state where
+			the current session can view the changes, but other sessions cannot. After a commit, then the other sessions can see the changes. A session can only terminate by either
+			going through the failed state or by committing first before terminating, which is what I found out in my first summary sentence of this question.
 
 	b. Can we implement any of the ACID properties using START-TRANSACTION/SAVEPOINT/ROLLBACK/COMMIT?
+		START TRANSACTION disables autocommit, so all the changes will have to be committed manually through the COMMIT command. This would be a form of consistency because everything that
+			happens after the START TRANSACTION is executed from beginning to end (by a COMMIT) which takes the database from one consistent state to another.
+		ROLLBACK is also a form of consistency because it takes the database from one consistent state to another consistent state (just in the backwards direction). SAVEPOINT can be used with
+			ROLLBACK as a point of the database in a consistent state that the ROLLBACK command could take it back to.
+		COMMIT command can be a form of durability because the changes in the database are then permanent after they are applied through a commit.
+		I don't think any of these four commands could be a form of either isolation or atomicity. Isolation could be implemented by the LOCK command in Oracle however. I guess the closest I could
+			think of for atomicity would be the START TRANSACTION command, which completes all the transactions in its entirety before manually committing them.

@@ -1,0 +1,42 @@
+SQL> lock table movie in exclusive mode nowait;
+
+Table(s) Locked.
+
+SQL> select * from movie where id = 230871;
+
+no rows selected
+
+SQL> select * from movie where id = 238071;
+
+        ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+      YEAR       RANK   SEQUELID                                                
+---------- ---------- ----------                                                
+    238071                                                                      
+Ocean's 11                                                                      
+      1960        8.5     238072                                                
+                                                                                
+
+SQL> update movie set rank = 8.7 where id = 238071;
+
+1 row updated.
+
+SQL> select rank from movie where id = 238071;
+
+      RANK                                                                      
+----------                                                                      
+       8.7                                                                      
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select rank from movie where id = 238071;
+
+      RANK                                                                      
+----------                                                                      
+       8.4                                                                      
+
+SQL> spool off;
