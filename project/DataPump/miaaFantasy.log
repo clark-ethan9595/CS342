@@ -1,0 +1,26 @@
+;;; 
+Export: Release 11.2.0.2.0 - Production on Thu Apr 20 17:29:59 2017
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+Starting "MIAAFANTASY"."SYS_EXPORT_TABLE_01":  miaaFantasy/******** parfile=miaaFantasy.par 
+Estimate in progress using BLOCKS method...
+Processing object type TABLE_EXPORT/TABLE/TABLE_DATA
+Total estimation using BLOCKS method: 512 KB
+Processing object type TABLE_EXPORT/TABLE/TABLE
+Processing object type TABLE_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type TABLE_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
+. . exported "MIAAFANTASY"."ATHLETE"                     12.00 KB      70 rows
+. . exported "MIAAFANTASY"."ATHLETE_GAME"                19.26 KB     420 rows
+. . exported "MIAAFANTASY"."ATHLETE_TEAM"                7.007 KB     160 rows
+. . exported "MIAAFANTASY"."GAME"                        6.687 KB      21 rows
+. . exported "MIAAFANTASY"."LEAGUE"                      6.007 KB       6 rows
+. . exported "MIAAFANTASY"."SCHOOL"                      6.445 KB       7 rows
+. . exported "MIAAFANTASY"."TEAM"                        8.242 KB      21 rows
+. . exported "MIAAFANTASY"."USERS"                       6.867 KB      22 rows
+Master table "MIAAFANTASY"."SYS_EXPORT_TABLE_01" successfully loaded/unloaded
+******************************************************************************
+Dump file set for MIAAFANTASY.SYS_EXPORT_TABLE_01 is:
+  C:\USERS\ELC3\DOCUMENTS\PROJECT\MIAAFANTASY.DMP
+Job "MIAAFANTASY"."SYS_EXPORT_TABLE_01" successfully completed at 17:30:03

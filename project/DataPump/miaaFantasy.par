@@ -1,0 +1,4 @@
+DIRECTORY=exp_dir
+DUMPFILE=miaaFantasy.dmp 
+LOGFILE=miaaFantasy.log
+TABLES=miaaFantasy.School, miaaFantasy.Athlete, miaaFantasy.Game, miaaFantasy.League, miaaFantasy.Users, miaaFantasy.Team, miaaFantasy.Athlete_Team, miaaFantasy.Athlete_Game

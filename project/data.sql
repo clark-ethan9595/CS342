@@ -107,7 +107,7 @@ INSERT INTO League VALUES (2, 'MIAArulez', TO_DATE('2016-10-26', 'YYYY-MM-DD'));
 INSERT INTO League VALUES (3, 'baller4life', TO_DATE('2016-10-25', 'YYYY-MM-DD'));
 INSERT INTO League VALUES (4, 'hoopsTillFall', TO_DATE('2016-10-29', 'YYYY-MM-DD'));
 INSERT INTO League VALUES (5, 'baksetballMadness', TO_DATE('2016-10-26', 'YYYY-MM-DD'));
-INSERT INTO League VALUES (6, 'knights4lyfe', TO_DATE('2017-10-10'), 'YYYY-MM-DD'));
+INSERT INTO League VALUES (6, 'knights4lyfe', TO_DATE('2017-10-10', 'YYYY-MM-DD'));
 
 INSERT INTO Users VALUES (1, 'parnold0', 'Patricia', 'Arnold');
 INSERT INTO Users VALUES (2, 'grogers1', 'Gary', 'Rogers');

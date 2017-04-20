@@ -3,10 +3,10 @@
 
 -- Create the user.
 
-DROP USER athlete CASCADE;
+DROP USER miaaFantasy CASCADE;
 
-CREATE USER athlete 
-	IDENTIFIED BY elc3
+CREATE USER miaaFantasy 
+	IDENTIFIED BY bjarne
 	QUOTA 5M ON System;
 
 GRANT 
@@ -19,9 +19,8 @@ GRANT
 	CREATE PROCEDURE,
 	CREATE TRIGGER,
 	UNLIMITED TABLESPACE
-	TO athlete;
+	TO miaaFantasy;
 
--- Connect to the user's account/schema.
-CONNECT athlete/elc3;
+connect miaaFantasy/bjarne
 
 @load
