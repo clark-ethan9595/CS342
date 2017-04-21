@@ -1,0 +1,47 @@
+Notes.txt
+Ethan Clark
+CS 342 - Lab11
+April 21, 2017
+
+Execise 11.1
+
+c. How do the external libraries (in the project pane) relate to J2SE and J2EE?
+
+	The two external libraries in my project Lab11 are the JDK (Java Development Kit) and the GlassFish 4.1.
+	These are the necessary libraries that we need to build our J2EE application. JDK 1.8 is basically what
+	makes up J2SE (Standard Edition) and adding on the GlassFish libraries (JAR files) makes it into J2EE
+	(Enterprise Edition).
+	
+d. Set the HTML title and body content to whatever you'd like. At what tier does this application run?
+
+	I believe this application runs on the Web Tier.
+	
+e. What server does this step use to serve up your application? For a hint, look at what's served up at the URL:/.
+	How does it compare with a typical web server?
+	
+	This step uses localhost:8080 to serve up my application. This is different from a web server because localhost
+	is running on the local computer host, while typical web servers serve up applications from a remote server.
+	
+f. Skim through these sections, making sure that you can find the application features they discuss. What is a WAR file?
+
+	A WAR file (web application archive) is a directory structure that is ready for deployment onto a web server.
+
+g. What's the difference between "exploded" and non-exploded WAR files?
+	
+	In an exploded WAR file, the application server points to a folder containing the unzipped (exploded) contents of what would be inside the
+	WAR file. This makes development quicker as most application servers can then change code and these changes will be reflected immediately.
+	The non-exploded WAR file is the actual archive file that is ready for deployment onto a web server.
+
+h. Compare and contrast EAR and WAR atrifacts.
+
+	WAR (Web Application Archive) files are specifically made for web applications. EAR (Enterprise Application Archive) files contain all of the
+	components that make up a particular J2EE application. Basically, EAR files are a superset which can contain WAR files. The EAR file contains
+	an application.xml file the META folder; the WAR file contains a web.xml file the META folder (which is what we did for the lab).
+	
+	
+Exercise 11.2
+
+b. What library does this application use for REST support?
+
+	This application uses the JAX-RS library for REST support. JAX-RS is the Java API for RESTful Web Services. This is found in the archived
+	javax.ws.rs-api.jar file in the External Libraries section of the Project Directory/Structure
