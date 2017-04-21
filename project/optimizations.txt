@@ -1,8 +1,81 @@
 Optimizations.txt
 Ethan Clark
 CS 342 - Final Project
-April 11, 2017
+April 20, 2017
 
 Analyze one of your more complicated queries from project 3 with respect to physical DB and SQL optimizations. Make a copy of the query,
 	show the execution plan, explain why it’s appropriate for this query on your database, discussing the use of indexes and SQL
 	optimizations that you’ve made.
+
+Query:
+
+	SELECT U.userName, T.teamName, L.leagueName, A.firstName, A.lastName, S.name
+	FROM Users U, Team T, Athlete_Team AT1, League L, Athlete A, School S
+	WHERE U.userId = T.userId AND T.leagueId = L.leagueId
+	AND AT1.teamId = T.teamId AND AT1.athleteId = A.athleteId
+	AND A.schoolId = S.schoolId;
+
+*********** Execution Plan ***********
+
+Elapsed: 00:00:00.32
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 945441161
+
+-------------------------------------------------------------------------------------------------
+| Id  | Operation                         | Name        | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT                  |             |     1 |   239 |     0   (0)| 00:00:01 |
+|   1 |  NESTED LOOPS                     |             |       |       |            |          |
+|   2 |   NESTED LOOPS                    |             |     1 |   239 |     0   (0)| 00:00:01 |
+|   3 |    NESTED LOOPS                   |             |     1 |   209 |     0   (0)| 00:00:01 |
+|   4 |     NESTED LOOPS                  |             |     1 |   179 |     0   (0)| 00:00:01 |
+|   5 |      NESTED LOOPS                 |             |     1 |   113 |     0   (0)| 00:00:01 |
+|   6 |       NESTED LOOPS                |             |     1 |    73 |     0   (0)| 00:00:01 |
+|   7 |        INDEX FULL SCAN            | SYS_C007384 |     1 |    26 |     0   (0)| 00:00:01 |
+|   8 |        TABLE ACCESS BY INDEX ROWID| ATHLETE     |     1 |    47 |     0   (0)| 00:00:01 |
+|*  9 |         INDEX UNIQUE SCAN         | SYS_C007374 |     1 |       |     0   (0)| 00:00:01 |
+|  10 |       TABLE ACCESS BY INDEX ROWID | SCHOOL      |     1 |    40 |     0   (0)| 00:00:01 |
+|* 11 |        INDEX UNIQUE SCAN          | SYS_C007373 |     1 |       |     0   (0)| 00:00:01 |
+|  12 |      TABLE ACCESS BY INDEX ROWID  | TEAM        |     1 |    66 |     0   (0)| 00:00:01 |
+|* 13 |       INDEX UNIQUE SCAN           | SYS_C007381 |     1 |       |     0   (0)| 00:00:01 |
+|  14 |     TABLE ACCESS BY INDEX ROWID   | LEAGUE      |     1 |    30 |     0   (0)| 00:00:01 |
+|* 15 |      INDEX UNIQUE SCAN            | SYS_C007379 |     1 |       |     0   (0)| 00:00:01 |
+|* 16 |    INDEX UNIQUE SCAN              | SYS_C007380 |     1 |       |     0   (0)| 00:00:01 |
+|  17 |   TABLE ACCESS BY INDEX ROWID     | USERS       |     1 |    30 |     0   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   9 - access("AT1"."ATHLETEID"="A"."ATHLETEID")
+  11 - access("A"."SCHOOLID"="S"."SCHOOLID")
+  13 - access("AT1"."TEAMID"="T"."TEAMID")
+  15 - access("T"."LEAGUEID"="L"."LEAGUEID")
+  16 - access("U"."USERID"="T"."USERID")
+
+*********** End Execution Plan ***********
+
+*********** Analysis of Query Execution Plan ***********
+
+	The point of this query is to display all the Athletes that belong to a given Fantasy Team. The Athlete First and Last Name is displayed along with
+	what Fantasy Team(s) they are on, the User of that Fantasy Team, the League the Fantasy Team belongs to, and the School the Athlete goes to.
+
+	This query is definitely a complicated one in that it joins together six tables to gather the data it needs to generate to the users. It uses all
+	different kinds of index and table access operations to achieve its goal. It performs an INDEX FULL SCAN on the athlete table because it needs to
+	output data for every athlete in the database, so the INDEX FULL SCAN reads the entire index (all rows) in index order. While looking at a specific
+	athlete, this query performs a TABLE UNIQUE SCAN on all the other tables (School, Team, League, and Users), which is done when there is a unique
+	constraint that ensures the search criteria will match no more than one entry. Each of these lookups is tied with a TABLE ACCESS BY INDEX ROWID to
+	retrieve a row from that table using the ROWID retrieved from a preceding index lookup operation.
+
+	The School, Team, League, and Users tables all have a single column attribute primary key which can be used as its index (all of those primary keys
+	can be seen in the Predicate Information section of the Query Execution Plan). There are really no other major query optimizations that can be done
+	for this query because this is really just a query that needs to join a bunch of tables together to get its information. Oracle does most of the
+	optimizing for this query on its own by doing a INDEX FULL SCAN for the Athlete table and then working through the rest of the tables to join with
+	to get the necessary information.
+
+	The one optimizing thing I did try to do for this query was to make two separate indexes for the Athlete_Team table; one on athleteId and one on
+	teamId. I attempted this to see if joining to the Athlete_Team table would be faster given the two separate indexes. But after a bunch of test runs,
+	the query with the two indexes did not have any improvement over the original query, which uses the primary key of (teamId, athleteId) from the
+	Athlete_Team table.

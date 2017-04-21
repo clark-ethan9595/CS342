@@ -18,14 +18,16 @@ BEGIN
 
 	SELECT COUNT(*) INTO counter FROM Athlete_Team WHERE teamId = :new.teamId;
 	
-	IF counter >= 9 THEN
+	-- If the Team is already full, raise an exception
+	IF counter >= 8 THEN
 		RAISE tooBigTeam;
 	END IF;
 	
 EXCEPTION
 
+	-- When the Team is already full
 	WHEN tooBigTeam THEN
-		RAISE_APPLICATION_ERROR(-20000, 'Team: ' + :new.teamId + ' is already full.');
+		RAISE_APPLICATION_ERROR(-20000, 'Team ' || :new.teamId || ' is already full.');
 
 END;
 /
@@ -44,14 +46,16 @@ BEGIN
 
 	SELECT COUNT(*) INTO counter FROM Team WHERE leagueId = :new.leagueId;
 	
-	IF counter >= 6 THEN
+	-- If the League is already full, raise an exception
+	IF counter >= 5 THEN
 		RAISE tooBigLeague;
 	END IF;
 	
 EXCEPTION
 
+	-- when the League is already full
 	WHEN tooBigLeague THEN
-		RAISE_APPLICATION_ERROR(-20000, 'League: ' + :new.leagueId + ' is already full.');
+		RAISE_APPLICATION_ERROR(-20000, 'League ' || :new.leagueId || ' is already full.');
 
 END;
 /

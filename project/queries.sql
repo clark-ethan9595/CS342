@@ -25,7 +25,7 @@ ORDER BY A.athleteId;
 -- Fantasy league users (and maybe the league administrator) would care to use this query to view all the athletes that are
 --		on a fantasy team within a given league.
 --
--- This query joins six tables together to get the desired results.
+-- This query joins six tables together to get the desired results
 SELECT U.userName, T.teamName, L.leagueName, A.firstName, A.lastName, S.name
 FROM Users U, Team T, Athlete_Team AT1, League L, Athlete A, School S
 WHERE U.userId = T.userId AND T.leagueId = L.leagueId
