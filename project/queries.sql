@@ -104,6 +104,22 @@ GROUP BY A1.firstName, A1.lastName, A2.firstName, A2.lastName, A2.position, S.na
 -- I think this is the only reasonable way to go about solving this type of query problem.
 
 
+-- QUERY 7
+-- This query returns all the Fantasy Teams and the Athletes on their team, along with the School the Athlete belongs to,
+--		including any athletes that are not on a Fantasy Team.
+--
+-- This query would be important to the fantasy league administrators to see which Athletes are on many fantasy teams and which
+--		are not on any fantasy teams.
+--
+-- This query uses a combination of two LEFT OUTER JOINS and an INNER JOIN to return the sought after data.
+SELECT A.firstName, A.lastName, S.name, T.teamName
+FROM Athlete A LEFT OUTER JOIN Athlete_Team AT1 ON A.athleteId = AT1.athleteId
+INNER JOIN School S ON A.schoolId = S.schoolId
+LEFT OUTER JOIN Team T ON AT1.teamId = T.teamId;
+-- I think this is the only reasonable way to go about solving this type of query problem, especially if you want the result set to contain
+--		both Athletes on Fantasy Teams and Athletes that are not on Fantasy Teams.
+
+
 -- View 1
 -- This view provides a quick view of each user and their fantasy team information, including
 --		those users that do not have a fantasy team yet.
