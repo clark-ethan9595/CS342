@@ -21,6 +21,7 @@ Work through the following materials this week:
 					byte arrays, images, XML, and Java objects. Many Java applications use Java objects to model their application
 					data. Because Java is an Object Oriented language, storing Java objects is a natural and common approach to
 					persisting data from Java.
+					c) Impedance mismatch is where programmers try to match up Java Objects (classes) with Relational tables.
 					
 			ii. POJOs
 				1) Plain Old Java Objects
