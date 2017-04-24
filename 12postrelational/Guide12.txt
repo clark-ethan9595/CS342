@@ -1,0 +1,133 @@
+Guide 12
+Ethan Clark
+CS 342 - Unit 12
+April 23, 2017
+
+Work through the following materials this week:
+
+	1. Read specified sections of Java Persistence and explain the given concepts.
+	
+		a. Chapter 3, "What is Java Persistence?"
+		
+			i. Persistence in Java and how it relates to the impedance mismatch discussed in Unit 8.
+				1) Persistence is an adjective describing data that outlives the process that created it.
+				2) Java persistence could be defined as storing anything to any level of persistence using the Java programming
+				language, but obviously this would be too broad. That is why this book is more focused on storing
+				Java objects to relational databases. In particular using the Java Persistence API (JPA).
+					a) The majority of data is persisted in databases, specifically relational databases. Most things that you can do
+					on a computer or web site that involve storing data, involve accessing a relational database. Relational databases
+					are the standard mode of persistent storage for most industries, from banking to manufacturing.
+					b) There are many things that can be stored in databases with Java. Java data includes strings, numbers, date and
+					byte arrays, images, XML, and Java objects. Many Java applications use Java objects to model their application
+					data. Because Java is an Object Oriented language, storing Java objects is a natural and common approach to
+					persisting data from Java.
+					
+			ii. POJOs
+				1) Plain Old Java Objects
+				2) JPA (Java Persistence API) allows POJOs to be easily persisted without requiring the classes to implement any
+				interfaces or methods as the EJB 2 CMP specification required.
+				3) JPA allows an object's object-relational mappings to be defined through standard annotations or XML defining how the
+				Java class maps to a relational database table. JPA also defines a runtime EntityManager API for processing queries and
+				transaction on the objects against the database. JPA defines an object-level query language, JPQL, to allow querying of
+				the objects from the database.
+				
+		b. Chapter 4, "Persistence Productions, Which to Use?" - Name 2-3 of the major JPA implementations and indicate which one we
+		are using in this class.
+			i. There are many persistence products to choose from. Most persistence products now support a JPA interface, although
+			there still are some exceptions. Which product you use depends on your preference, but most people would recommend you use
+			the JPA standard whichever product you choose. This gives you the flexibility to switch persistence providers, or port your
+			application to another server platform which may use a different persistence provider.
+				1) Hibernate (Red Hat)
+					a) Application Servers: JBoss AS/Wildfly
+				2) EclipseLink (Eclipse) **** This is the one we are using in this class.*****
+					a) Application Servers: Oracle Weblogic, Glassfish
+				3) TopLink (Oracle)
+					a) Application Servers: Oracle Weblogic, OracleAS
+					
+		c. Chapter 5, "Mapping, Round Pegs into Square Holes" - Annotate this Java class for object-relational mapping using Java
+		Annotations with the property access type.
+			@Entity
+			public class Solder {
+			
+				@Basic                       // Don't need this because it is the default, but for practice purposes I will keep it here
+				@Column(name="NAME")
+				private String name;
+				
+				@Basic                       // Don't need this because it is the default, but for practice purposes I will keep it here
+				@Column(name="RANK")
+				private String rank;
+				
+				@Id                          // Id mappings are also basic mappings
+				@Column(name="serialNumber")
+				private long serialNumber;
+				
+				@ManyToOne(fetch=FetchType.LAZY)        // Many to one relationship (many solders can have the same commander)
+				@JoinColumn(name="commanderSerialNumber")
+				private long commanderSerialNumber;
+				
+				@ManytoMany            // Many to many relationship (a solder can be in many battles and a battle can have many solders)
+				@JoinTable(
+					name="Solder_Battles",
+					joinColumns=@JoinColumn(name="Solder_SerialNumber", referencedColumnName="serialNumber"),
+					inverseJoinColumns=@JoinColumn(name="Battle_ID", referencedColumnName="ID"))
+				private List<Battle> battles;
+				
+				public String getName() { return name; }
+				public void setName(String name) { this.name = name }
+				
+				public String getRank() { return rank; }
+				public void setRank(String rank) { this.rank = rank; }
+				
+				public String getSerialNumber() { return serialNumber; }
+				public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
+				
+			i. In particular, add annotations for the following.
+				1) Persistence Entity - Annotate the class as a persistence entity (Chapter 5 overview).
+				2) OID - Annotate the object ID (Section 5.2).
+				3) Basic Fields - Annotate the non-ID fields (Section 5.6).
+				4) Relationships - Add new fields/accessors/annotations that exemplify the following JPA relationships (Section 5.7
+				overview and Sections 5.7.2 - 5.7.4).
+					a) A many-to-one relationship to a commander - The commander is another Solder object.
+					b) A many-to-many relationship to a Battle class - You don't need to add the Battle class.
+					
+			ii. You don't need to run this code, but be familiar with the concepts and the annotations that implement them.
+			
+		d. Chapter 6, "Runtime, Doing the Hokey Pokey (EntityManager)"
+			i. Entity Manager (Chapter 6 overview)
+				1) JPA provides a runtime API defined by javax.persistence package. The main runtime class is the EntityManager class.
+					a) The EntityManager class provides API for creating queries, accessing transactions, and finding, persisting,
+					merging, and deleting objects.
+					b) The JPA API can be used in any Java environment including JSE and JEE.
+					
+			ii. Injection - We'll use J2EE dependency injection to access to a container-managed EntityManager (Chapter 6 overview).
+				1) An EntityManager can be created through an EntityManagerFactory, or can be injected into an instance variable in an
+				EJB SessionBean, or can be looked up in JNDI in a JEE server.
+				
+			iii. Persistence operations - Name the four basic persistence operations (Section 6.2).
+				1) Persist (INSERT)
+				2) Merge (UPDATE)
+				3) Remove (DELETE)
+				4) Find (SELECT)
+			
+	2. Review Intellij's support to database connections and JPA.
+	
+		a. Create a new J2EE application as you created the JDK/J2EE application in the previous lab, activating the following "Java
+		Enterprise" libraries/frameworks.
+			i. Web Application 3.1
+			ii. J2EE Persistence 2.1; Provider: EclipseLink; setting up the library later
+			iii. RESTful Web Service; using the library from the GlassFish installation
+			
+		b. Store it in your repo under cs342/12postrelational/Lab12.
+		
+		c. Databases and SQL - Note that Oracle must be running with the CPDB database loaded for this data connection to work.
+			i. Open the Intellij database tool pane by choosing View -> Tool Windows -> Database
+			ii. Create a new data source for your existing Oracle CPDB database, name it cpdb&localhost and make sure that "Test
+			Connection" works properly. You may need to download a required library (to make IDEA happy; GlassFish already has all the
+			required libraries).
+			iii. Fetch the records in the Person table by double-clicking on the table name in the Database pane.
+			
+		d. Java Persistence API (JPA)
+			i. Open the Intellij "Persistence" tool pane by choosing View -> Tool Windows -> Persistence.
+			
+		e. Store a (low - resolution) screen dump image of your new app in the IDE. IT should look something like the one shown to the
+		right (but be lower-resolution). You'll use this app as the basis for lab 12.
