@@ -1,7 +1,5 @@
-/*
- * Created by Ethan on 4/21/2017
- * Lab 11 and Homework 11
- * CS 342 @ Calvin College
+/**
+ * Created by Ethan on 4/27/2017.
  */
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -16,7 +14,7 @@ public class MyApplication extends Application{
     @Override
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
-        h.add( HelloWorld.class );
+        h.add( CPDBResource.class );
         return h;
     }
 }

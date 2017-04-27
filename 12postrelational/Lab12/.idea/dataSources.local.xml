@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="cpdb&amp;localhost" uuid="ee0ff258-7d0a-4769-8c68-b6f2af1439d7">
+    <data-source name="cpdb&amp;localhost" uuid="5c7707f8-c366-4dd3-b53d-d05d9b8ff134">
       <database-info product="Oracle" version="Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production" jdbc-version="4.0" driver-name="Oracle JDBC driver" driver-version="12.1.0.2.0">
         <extra-name-characters>$#</extra-name-characters>
         <identifier-quote-string>&quot;</identifier-quote-string>
