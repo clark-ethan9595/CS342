@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.sql.Time;
 
 /**
- * Created by Ethan on 4/27/2017.
+ * Created by Ethan on 4/28/2017.
  */
 @Entity
 public class Person {

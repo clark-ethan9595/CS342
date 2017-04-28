@@ -6,11 +6,6 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Lab12" />
-          <element id="library" level="project" name="glassfish4" />
-        </element>
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="Jersey-2.2" />
-          <element id="library" level="project" name="JPA 2.0-2.0" />
         </element>
       </element>
     </root>

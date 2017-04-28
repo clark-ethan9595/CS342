@@ -1,10 +1,3 @@
-/**
- * This stateless session bean serves as a RESTful resource handler for the CPDB.
- * It uses a container-managed entity manager.
- *
- * @author kvlinden
- * @version Spring, 2017
- */
 import models.Person;
 
 import javax.ejb.Stateless;
@@ -17,6 +10,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+/**
+ * This stateless session bean serves as a RESTful resource handler for the CPDB.
+ * It uses a container-managed entity manager.
+ *
+ * @author kvlinden
+ * @version Spring, 2017
+ */
 @Stateless
 @Path("cpdb")
 public class CPDBResource {

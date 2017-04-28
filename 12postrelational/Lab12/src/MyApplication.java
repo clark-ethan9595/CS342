@@ -1,20 +1,21 @@
 /**
- * Created by Ethan on 4/27/2017.
+ * Created by Ethan Clark on 4/21/2017
+ * Lab 12
+ * CS 342 @ Calvin College
  */
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
 
-//Defines the base URI for all resource URIs.
 @ApplicationPath("/")
-//The java class declares root resource and provider classes
-public class MyApplication extends Application{
-    //The method returns a non-empty collection with classes, that must be included in the published JAX-RS application
+public class MyApplication extends Application {
+
     @Override
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
-        h.add( CPDBResource.class );
+        h.add(CPDBResource.class);
         return h;
     }
 }

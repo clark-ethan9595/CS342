@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by Ethan on 4/27/2017.
+ * Created by Ethan on 4/28/2017.
  */
 @Entity
 public class Team {
