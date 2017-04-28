@@ -7,6 +7,7 @@
         <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="NewPersistenceUnit" value="5ba6b436-57c6-46c4-91d0-9a9bae2663cf" />
+          <factory-entry name="cpdbEntities" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
       </configuration>

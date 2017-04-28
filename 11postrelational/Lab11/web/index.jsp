@@ -11,6 +11,6 @@
     <title>Lab 11 - CS 342</title>
   </head>
   <body>
-  HELLO CS WORLD PEOPLE
+  HELLO EVERYONE
   </body>
 </html>
