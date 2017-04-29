@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by Ethan on 4/28/2017.
+ * Created by elc3 on 4/29/2017.
  */
 public class PersonteamPK implements Serializable {
     private long personid;

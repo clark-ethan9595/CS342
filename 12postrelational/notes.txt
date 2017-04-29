@@ -6,27 +6,50 @@ April 28, 2017
 
 Exercise 12.1
 
-1. Compare and contrast the database connection you built in Guide 12 (in Intellij IDEA) and this database connection (in GlassFish). Do we need both? If so, explain why; if not, explain why not.
+1. Compare and contrast the database connection you built in Guide 12 (in Intellij IDEA) and this database connection (in GlassFish).
+	Do we need both? If so, explain why; if not, explain why not.
+	
+	- Yes, we do need both the Intellij database connection and the GlassFish server database connection. The Intellij database connection allows developers/users of Intellij
+		to connect to the database as more of a test tool, while the GlassFish server database connection would be used for all the requests to the database from an actual production
+		application standpoint.
 
 
 Exercise 12.2
 
 1. How does Intellij map the database tables into Java entity classes?
 
+	- Intellij created a Java Object (Java class in a .java file) for each of the database tables that we specified (Person, HouseHold, Team, PersonTeam).
+
 2. What does the PK class do?
 
+	- The PersonTeamPK class uses Primary Keys (hence the PK) to map persons to teams. I think this is needed because of the Many to Many relationship bewteen Person and Team.
+
 3. Does Intellij default to field or property annotations?
+
+	- Intellij defaults to property access for annotations because the class uses get and set methods to store and load the values from the database.
 
 
 Exercise 12.3
 
 1. Does this application perform marshalling? If so, explain what the marshalling does; if not, explain why it't not needed.
 
+	- Yes this application does perform marshalling. Marshalling is converting a Java Object into something that can be sent to a client (in our case, we send it as JSON) so that
+		whatever technology is at the client end can receive and handle it.
+
 2. Does this code perform any injection? Again, explain...
 
+	- This code uses the Java EntityManager injected into the CPDBResource class, so yes this code performs injection. The EntityManager instance is associated with a persistence context.
+		It is used to create and remove persistent entity instances, to find entites by their primary key, and to query over entities.
+
 3. What does the entity manager do in this code, if anything?
+	
+	- The EntityManager instance is associated with a persistence context. It is used to create and remove persistent entity instances, to find entites by their primary key,
+		and to query over entities. In our code, we use em.find(...) to find a particular instance of a particular type/table in the database.
 
 
 Exercise 12.4
 
 1. How does JPA return the household and team entities related to a given person?
+
+	- JPA returns the household and team entites in JSON form inside the already-JSON person information. The household is a plain JSON object while the team is a JSON array with
+		each element being a team that the person belongs to.

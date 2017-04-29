@@ -3,7 +3,7 @@ package models;
 import javax.persistence.*;
 
 /**
- * Created by Ethan on 4/28/2017.
+ * Created by elc3 on 4/29/2017.
  */
 @Entity
 @IdClass(PersonteamPK.class)

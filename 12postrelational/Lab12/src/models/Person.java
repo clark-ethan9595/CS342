@@ -1,16 +1,15 @@
 package models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Time;
+import java.util.List;
 
 /**
- * Created by Ethan on 4/28/2017.
+ * Created by elc3 on 4/29/2017.
  */
 @Entity
 public class Person {
+    @Id
     private long id;
     private String title;
     private String firstname;
@@ -20,6 +19,27 @@ public class Person {
     private Time birthdate;
     private String householdrole;
     private String homegrouprole;
+
+    // Create the ManyToOne relationship between a Person and a Household
+    @ManyToOne
+    @JoinColumn(name = "HOUSEHOLDID", referencedColumnName = "ID")
+    private Household household;
+
+    // Declare the accessor and mutator methods for the Person's Household
+    public Household getHousehold() { return household; }
+    public void setHousehold(Household new_household) { this.household = new_household; }
+
+    // Create the ManyToMany relationship between a Person and a Team
+    // Many Persons can be on many teams.
+    @ManyToMany
+    @JoinTable(name = "PERSONTEAM", schema = "CPDB",
+                joinColumns = @JoinColumn(name = "PERSONID", referencedColumnName = "ID", nullable = false),
+                inverseJoinColumns = @JoinColumn(name = "TEAMNAME", referencedColumnName = "NAME", nullable = false))
+    private List<Team> teams;
+
+    // Declare teh accessor and mutator methods for the Person's Team list
+    public List<Team> getTeamList() { return teams; }
+    public void setTeamList(List<Team> new_teamList) { this.teams = new_teamList; }
 
     @Id
     @Column(name = "ID")
