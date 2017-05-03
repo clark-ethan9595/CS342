@@ -3,10 +3,7 @@ import models.Person;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -65,6 +62,58 @@ public class CPDBResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Person> getPeople() {
         return em.createQuery(em.getCriteriaBuilder().createQuery(Person.class)).getResultList();
+    }
+
+    /*
+    * PUT (modifying) person with id x from URL if person exists.
+    * Return simple phrase saying person is being modified.
+    *
+    * Written by: Ethan Clark (elc3)
+    * CS 342 - Homework11
+    * May 3, 2017
+    */
+    @PUT
+    @Path("person/{x}")
+    @Consumes("text/plain")
+    @Produces("text/plain")
+    public String putPerson(@PathParam("x") long temp_id) {
+        em.merge(em.find(Person.class, temp_id));
+        return "Modifying person " + temp_id + " in the database";
+    }
+
+    /*
+    * POST (insert) person using information from the request
+    * Return simple phrase saying person is being added to the database.
+    *
+    * Written by: Ethan Clark (elc3)
+    * CS 342 - Homework11
+    * May 3, 2017
+    */
+    @POST
+    @Path("people")
+    @Consumes("text/plain")
+    @Produces("text/plain")
+    public String postPerson(Person person) {
+        em.persist(person);
+        return "Posting person into the database...";
+    }
+
+    /*
+     * DELETE person with id x from URL.
+     * Return simple phrase saying person is being deleted.
+     *
+     * Written by: Ethan Clark (elc3)
+     * CS 342 - Homework11
+     * May 3, 2017
+     */
+    @DELETE
+    @Path("person/{x}")
+    @Consumes("text/plain")
+    @Produces("text/plain")
+    public String deletePerson(@PathParam("x") long temp_id) {
+        Person person = em.find(Person.class, temp_id);
+        em.remove(person);
+        return "Removing person " + temp_id + " from database...";
     }
 
 }

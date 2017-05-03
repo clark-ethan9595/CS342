@@ -42,6 +42,8 @@ public class Person {
     public void setTeamList(List<Team> new_teamList) { this.teams = new_teamList; }
 
     @Id
+    @GeneratedValue(generator = "cpdbSequence")
+    @SequenceGenerator(name = "cpdbSequence", sequenceName = "cpdb_sequence", allocationSize = 1)
     @Column(name = "ID")
     public long getId() {
         return id;
