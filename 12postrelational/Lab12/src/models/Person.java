@@ -4,12 +4,14 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.util.List;
 
-/**
+/*
  * Created by elc3 on 4/29/2017.
  */
 @Entity
 public class Person {
     @Id
+    @GeneratedValue(generator = "cpdbSequence")
+    @SequenceGenerator(name = "cpdbSequence", sequenceName = "cpdb_sequence", allocationSize = 1)
     private long id;
     private String title;
     private String firstname;
@@ -37,13 +39,11 @@ public class Person {
                 inverseJoinColumns = @JoinColumn(name = "TEAMNAME", referencedColumnName = "NAME", nullable = false))
     private List<Team> teams;
 
-    // Declare teh accessor and mutator methods for the Person's Team list
+    // Declare the accessor and mutator methods for the Person's Team list
     public List<Team> getTeamList() { return teams; }
     public void setTeamList(List<Team> new_teamList) { this.teams = new_teamList; }
 
     @Id
-    @GeneratedValue(generator = "cpdbSequence")
-    @SequenceGenerator(name = "cpdbSequence", sequenceName = "cpdb_sequence", allocationSize = 1)
     @Column(name = "ID")
     public long getId() {
         return id;

@@ -1,3 +1,4 @@
+import models.Household;
 import models.Person;
 
 import javax.ejb.Stateless;
@@ -64,43 +65,49 @@ public class CPDBResource {
         return em.createQuery(em.getCriteriaBuilder().createQuery(Person.class)).getResultList();
     }
 
-    /*
-    * PUT (modifying) person with id x from URL if person exists.
-    * Return simple phrase saying person is being modified.
-    *
-    * Written by: Ethan Clark (elc3)
-    * CS 342 - Homework11
-    * May 3, 2017
-    */
+    /**
+     * PUT (modify) person with id x (from URL) and the passed person object
+     * Returns the same person object
+     *
+     * Written by: Ethan Clark (elc3)
+     * CS 342 - Homework11
+     * May 3, 2017
+     */
     @PUT
     @Path("person/{x}")
-    @Consumes("text/plain")
-    @Produces("text/plain")
-    public String putPerson(@PathParam("x") long temp_id) {
-        em.merge(em.find(Person.class, temp_id));
-        return "Modifying person " + temp_id + " in the database";
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Person putPerson(@PathParam("x") long temp_id, Person person) {
+        Person tempPerson = em.find(Person.class, temp_id);
+        if (tempPerson != null) {
+            em.merge(person);
+        }
+        return person;
     }
 
-    /*
-    * POST (insert) person using information from the request
-    * Return simple phrase saying person is being added to the database.
-    *
-    * Written by: Ethan Clark (elc3)
-    * CS 342 - Homework11
-    * May 3, 2017
-    */
+    /**
+     * POST (insert) person using information from the request
+     * Return the person that was posted into the database
+     *
+     * Written by: Ethan Clark (elc3)
+     * CS 342 - Homework11
+     * May 3, 2017
+     */
     @POST
     @Path("people")
-    @Consumes("text/plain")
-    @Produces("text/plain")
-    public String postPerson(Person person) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Person postPerson(Person person) {
+        Person tempPerson = new Person();
+        person.setId(tempPerson.getId());
+        person.setHousehold(em.find(Household.class, person.getHousehold().getId()));
         em.persist(person);
-        return "Posting person into the database...";
+        return person;
     }
 
-    /*
+    /**
      * DELETE person with id x from URL.
-     * Return simple phrase saying person is being deleted.
+     * Return the person that was deleted, if that person was in the database
      *
      * Written by: Ethan Clark (elc3)
      * CS 342 - Homework11
@@ -108,12 +115,13 @@ public class CPDBResource {
      */
     @DELETE
     @Path("person/{x}")
-    @Consumes("text/plain")
-    @Produces("text/plain")
-    public String deletePerson(@PathParam("x") long temp_id) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Person deletePerson(@PathParam("x") long temp_id) {
         Person person = em.find(Person.class, temp_id);
-        em.remove(person);
-        return "Removing person " + temp_id + " from database...";
+        if (person != null) {
+            em.remove(person);
+        }
+        return person;
     }
 
 }
