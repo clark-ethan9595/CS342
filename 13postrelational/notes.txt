@@ -1,0 +1,42 @@
+notes.txt
+Lab 13 - CS 342
+Ethan Clark
+May 5, 2017
+
+Exericse 13.1
+
+	a. Compare and contrast the store.put() command used here for KVLite and the em.persist() command you used for the GlassFish
+		entity manager in the previous lab.
+		
+		- em.persist() from the entity manager makes an instance of the object being stored, which I understand as for creating a new object
+			that does not exist already in the database. store.put() also stores a new object in the database, regardless if it exists in the
+			database or not. KVLite has other put operations for putting only if entity is present or if the entity is absent.
+		
+	b. Compare and contrast the store.put() command with the standard Java hashtable's myHashTable.put() command.
+	
+		- store.put() and the hashtable.put() commands do the same basic thing by creating a key, which is how to reference a specific
+			value associated with that key. store.put() stores the object in the database and hashtable.put() puts the value into the hash
+			table at a specific hash/index.
+	
+Exercise 13.2
+
+	a. Compare and contrast KVLite keys with relational database keys.
+	
+		- For relational database keys, typically one field/column can act as the primary key which allows for access to any of the other
+			fields/columns for that given record. For KVLite keys, they specifiy the record as a whole and the individual fields in which
+			the minor keys refer to. From the reading guide, the major key components identify which shard stores a given record. Every record
+			must have at least one major key component.
+	
+Exercise 13.3
+
+	a. So far, the implementation has only dealth with records in one relational table, Movie. Explain how a key-value database
+		might implement the one-to-many join relationships commonly implemented in relational databases using foreign keys.
+		
+		- One way in which to implement a one-to-many relationship in a key-value database is through defining the relationship name, i.e.
+			follower (From the reading guide) or child or something like that, as a major key. If this is defined as a major key, it is easy
+			to get all the relationships with a multi-get on the store.
+		
+	b. KVLite requires that there be a key, but it is possible to have an "empty" value. Such a value can be created using
+		Value.createValue(new byte[0]). Where might one need such a construct?
+		
+		- My guess is that this could be used to represent a NULL value, just like NULL is used in relational databases.
