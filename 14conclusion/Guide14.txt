@@ -1,0 +1,109 @@
+Gudie 14
+Ethan Clark
+CS 342
+May 7, 2017
+
+Work through the following materials this week:
+
+	1. Read Section 30.1:
+	
+		a. Name and explain the four kinds of control measures required for database security.
+			i. Access Control
+				1) A security problem common to computer systems is that of preventing unauthorized person from accessing the system
+				itself, either to obtain information or to make malicious changes in a portion of the database.
+				2) The security mechanism of a DBMS must include provisions for restricting access to the database system as a whole.
+				3) This function, called access control, is handled by creating user accounts and passwords to control the login
+				process by the DBMS.
+			ii. Inference Control
+				1) Security for statistical databases must ensure that information about individuals cannot be accessed.
+				2) It is sometimes possible to deduce or infer certain facts concerning individuals from queries that involve only
+				summary statistics on groups; consequently, this must not be permitted either.
+				3) This problem is called statistical database security.
+			iii. Flow Control
+				1) Flow control prevents information from flowing in such a way that it reaches unauthorized users.
+				2) Covert channels are pathways on which information flows implicitly in ways that violate the security policy of an
+				organization.
+			iv. Data Encryption
+				1) Data encryption is sometimes used to protect sensitive data (such as credit card numbers) that is transmitted via
+				some type of communications network.
+				2) Encryption can be used to provide additional protection for sensitive portions of a database as well. The data is
+				encoded using some coding algorithm. An unauthorized user who accesses encoded data will have difficultly deciphering
+				it, but authorized users are given decoding or decrypting algorithms (keys) to decipher the data.
+				3) Encrypting techniques that are very difficult to decode without a key have been developed for military
+				applications. However, encrypted database records are used today in both private organizations and government and
+				military applications.
+		
+		b. Compare and contrast information security and information privacy.
+			i. Information Security: issues related to access to resources
+				1) Security in information technology refers to many aspects of protecting a system from unauthorized use, including
+				authentication of users, information encryption, access control, firewall policies, and intrusion detection.
+				2) For the purposes of the book, it will limit the treatment of security to the concepts associated with how well a
+				system can protect access to information it contains.
+				3) Security involves technology to ensure that information is appropriate protected. Security is a required building
+				block for privacy.
+			ii. Information Privacy: issues related to appropriate use of information
+				1) The concept of privacy goes beyond security. Privacy examines how well the use of personal information that the
+				system acquires about a user conform to the explicit or implicit assumptions regarding that use.
+				2) From an end-user perspective, privacy can be considered form two different perspectives: preventing storage of
+				personal information versus ensuring appropriate use of personal information.
+				3) For purposes of the chapter, a simple but useful definition of privacy is the ability of individuals to control
+				the terms under which their personal information is acquired and used.
+				4) Privacy involves mechanisms to support compliance with some basic principles and other explicitly stated policies.
+					a) One principle is that people should be informed about information collection, told in advance what will be
+					done with their information, and given a reasonable opportunity to approve or disapprove of such use of their
+					information.
+			iii. A related concept, trust, relates to both security and privacy and is seen as increasing when it is perceived that
+			both security and privacy are provided for.
+		
+	2. Read "Imperva's Top 5 Database Security Threats".
+	
+		a. Name and explain the security threats discussed in the article.
+			i. Excessive, Inappropriate, and Unused Privileges.
+				1) When you grant someone database privileges that exceed the requirements of their job function, these privileges
+				can be abused.
+				2) The complexity of applications and the corresponding data structures used mean that administrators are inclined to
+				grant excessive privileges by default just to avoid the risk of application failure due to lack of access privileges.
+				Thus, users may be granted generic or default access privileges that far exceed their specific job requirements, or
+				they may simply accumulate such privileges over time.
+				3) An efficient method to pinpoint excessive and unused privileges in the organization is to use database assessment
+				and database monitoring with a user rights management option. 
+			ii. Privilege Abuse
+				1) Certain “Privileged Users” may abuse legitimate database privileges for unauthorized purposes.
+				2) Database systems administrators (DBAs) have unlimited access to all data in the database. For the best security,
+				DBAs should not access application data in the database (applicative data/tables) directly when they are
+				administrating the database. When a DBA accesses the applicative data directly through the database instead of the
+				application interface, he bypasses the application logging and retrieval limitations and avoids the application
+				permissions and security mechanism. 
+			iii. Insufficient Web Application Security
+				1) There are many types of attacks on applications that can expose data. Two common types of web application attacks
+				that target databases are SQL Injection and Web Shell.
+					a) SQLi attacks are a result of incomplete or inadequate input validation that allows bad actors to pass SQL
+					commands to the database via the web application in a manner that was never anticipated. 
+					b) Web Shell attacks are a stealthy method used to gain unauthorized remote access to a server. Web shells are
+					backdoors that utilize the web server core functionality (serving remote clients) to gain persistent remote
+					access and obtain full or limited control over the server through an interface to the server’s shell.
+			iv. Weak Audit Trails
+				1) The failure to monitor for both security and compliance anomalies and collect the appropriate audit details of
+				database activity represents a serious organizational risk at many levels.
+				2) Additionally, organizations with weak (or sometimes non-existent) database audit mechanisms also find that they
+				are at odds with industry and government regulatory requirements.
+				3) Why are auditing trails so challenging?
+					a) The first reason is that many enterprises turn to native audit tools provided by their database vendors or
+					rely on ad-hoc and manual solutions and assume these approaches are sufficient. 
+					b) Furthermore, native database audit mechanisms are notorious for erratic and excessive consumption of the
+					database server’s CPU and disk resources, forcing many organizations to scale back or eliminate native auditing
+					altogether. 
+					c) Finally, most native audit mechanisms are unique to a database server platform.
+				4) Second challenge: processing the audit
+					a) Having the correct audit trail is only the first step towards protecting data. The second step is
+					understanding the data activity and access attempts to process that data and determine credible threats
+					b)  It is difficult to identify the entity that accessed the database and distinguish between DBAs,
+					applications, users, and jobs if you don’t have the tools built for this task. You need to understand which
+					accesses to the database are suspicious. 
+			v. Unsecured Storage Media
+				1) Numerous security breaches have involved the theft or incidental exposure of database backup disks and tapes.
+				2) Taking the appropriate measures to protect backup copies of sensitive data is not only a data security best
+				practice, but also mandated by many regulations.
+				3) In addition, highly privileged users will often have direct physical access to the database servers. 
+	
+			§ Side Note: Insider threats can be categorized into three profiles: malicious, negligent, and compromised.
