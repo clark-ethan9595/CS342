@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.jar.Pack200;
 
 /**
  * LoadDB.java loads in the data from the Actor, Movie, and Role table from the IMDB database in OracleXE
@@ -67,7 +68,7 @@ public class LoadDB {
     public static void getActors(KVStore store, Connection jdbcConnection) throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
-        ResultSet resultSet = jdbcStatement.executeQuery("SELECT id, firstName, lastName FROM Movie");
+        ResultSet resultSet = jdbcStatement.executeQuery("SELECT id, firstName, lastName FROM Actor");
         while (resultSet.next()) {
 
             Integer actorId = resultSet.getInt(1);
@@ -88,9 +89,19 @@ public class LoadDB {
     public static void getRoles(KVStore store, Connection jdbcConnection) throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
-        ResultSet resultSet = jdbcStatement.executeQuery("SELECT actorId, movieId, role FROM Movie");
+        ResultSet resultSet = jdbcStatement.executeQuery("SELECT actorId, movieId, role FROM Role");
+        Integer i = 0;
 
-
+        while (resultSet.next()) {
+            Key actorKey = Key.createKey(Arrays.asList("role", resultSet.getString(1), resultSet.getString(2)), Arrays.asList("name"));
+            Value roleValue = Value.createValue(resultSet.getString(3).getBytes());
+            store.put(actorKey, roleValue);
+//            if (i < 10) {
+//                String result = new String(store.get(actorKey).getValue().getValue());
+//                System.out.println(actorKey.toString() + " : " + result);
+//                i++;
+//            }
+        }
 
         resultSet.close();
         jdbcStatement.close();
