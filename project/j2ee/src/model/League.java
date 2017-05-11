@@ -11,6 +11,7 @@ import java.sql.Time;
  */
 @Entity
 public class League {
+
     private long leagueid;
     private String leaguename;
     private Time startdate;

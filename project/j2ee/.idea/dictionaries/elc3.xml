@@ -5,9 +5,11 @@
       <w>firstname</w>
       <w>lastname</w>
       <w>leagueid</w>
+      <w>leaguename</w>
       <w>miaa</w>
       <w>mutator</w>
       <w>schoolid</w>
+      <w>startdate</w>
       <w>teamid</w>
       <w>teamname</w>
       <w>tful</w>

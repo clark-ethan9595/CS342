@@ -27,17 +27,9 @@ public class Athlete {
     public School getSchool_name() { return school_name; }
     public void setSchool_name(School new_school) { this.school_name = new_school; }
 
-    @ManyToMany
-    @JoinTable(name = "ATHLETE_TEAM", schema = "miaaFantasy",
-                joinColumns = @JoinColumn(name = "ATHLETEID", referencedColumnName = "ATHLETEID", nullable = false),
-                inverseJoinColumns = @JoinColumn(name = "TEAMID", referencedColumnName = "TEAMID", nullable = false))
-    private List<Team> teams;
-
-    // Declare the accessor and mutator methods for the Athlete's Team list
-    public List<Team> getTeamList() { return teams; }
-    public void setTeamList(List<Team> new_teamList) { this.teams = new_teamList; }
-
     @Id
+    @GeneratedValue(generator = "cpdbSequence")
+    @SequenceGenerator(name = "cpdbSequence", sequenceName = "cpdb_sequence", allocationSize = 1)
     @Column(name = "ATHLETEID")
     public long getAthleteid() {
         return athleteid;

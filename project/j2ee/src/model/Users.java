@@ -7,6 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 public class Users {
+
     private long userid;
     private String username;
     private String firstname;

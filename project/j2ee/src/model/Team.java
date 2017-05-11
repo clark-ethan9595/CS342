@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by elc3 on 5/11/2017.
@@ -22,6 +23,18 @@ public class Team {
     // Declare the accessor and mutator methods for the Team's League
     public League getLeague() { return league; }
     public void setLeague(League new_league) { this.league = new_league; }
+
+    // Create the ManyToMany relationship between a Team and an Athlete
+    // Many Teams can have many Athletes
+    @ManyToMany
+    @JoinTable(name = "ATHLETE_TEAM", schema = "miaaFantasy",
+                joinColumns = @JoinColumn(name = "TEAMID", referencedColumnName = "TEAMID", nullable = false),
+                inverseJoinColumns = @JoinColumn(name = "ATHLETEID", referencedColumnName = "ATHLETEID", nullable = false))
+    private List<Athlete> athletes;
+
+    // Declare the accessor and mutator methods for the Team's athletes
+    public List<Athlete> getAthletes() { return athletes; }
+    public void setAthletes(List<Athlete> new_athletes) { this.athletes = new_athletes; }
 
     @Id
     @Column(name = "TEAMID")
