@@ -1,7 +1,15 @@
 <component name="ProjectDictionaryState">
   <dictionary name="elc3">
     <words>
+      <w>athleteid</w>
+      <w>firstname</w>
+      <w>lastname</w>
+      <w>leagueid</w>
       <w>miaa</w>
+      <w>mutator</w>
+      <w>schoolid</w>
+      <w>teamid</w>
+      <w>teamname</w>
       <w>tful</w>
     </words>
   </dictionary>

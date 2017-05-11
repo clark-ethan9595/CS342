@@ -14,8 +14,6 @@ public class GetSortedMovies {
     public static void main(String[] args) throws SQLException {
         KVStore store = KVStoreFactory.getStore(new KVStoreConfig("kvstore", "localhost:5000"));
 
-        LoadDB.loadDatabase(store);
-
         Key majorKeyPathOnly = Key.createKey(Arrays.asList("movie"));
         Map<Key, ValueVersion> fields = store.multiGet(majorKeyPathOnly, null, null);
 

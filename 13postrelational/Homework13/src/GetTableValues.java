@@ -16,8 +16,6 @@ public class GetTableValues {
     public static void main(String[] args) throws SQLException {
         KVStore store = KVStoreFactory.getStore(new KVStoreConfig("kvstore", "localhost:5000"));
 
-        LoadDB.loadDatabase(store);
-
         Scanner reader = new Scanner(System.in);
         System.out.print("Please enter id of movie: ");
         Integer id = reader.nextInt();
