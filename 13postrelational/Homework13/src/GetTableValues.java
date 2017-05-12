@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 /** GetTableValues gets the basic field values from the Movie table
  *
+ * See LoadDB.java for more information about how the data is stored for the movie table.
+ *
  * Written by: Ethan Clark
  * Homework 13 - CS342
  * Date: May 10, 2017

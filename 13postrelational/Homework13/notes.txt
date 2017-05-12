@@ -5,8 +5,26 @@ May 10, 2017
 
 a. What type of noSQL database system is Oracle's NoSQL product, KVLite?
 
-b. The Internet Movie Database (imdb.com) is currently implemented in mySQL. If you were required to port it to a noSQL system, which of the noSQL system types would you suggest? Explain your answer.
+    - Oracle's NoSQL product KVLite is Key-Value NoSQL database type because it obviously stores keys with values in the kvstore.
 
-c. Could you (efficiently) reuse the same key-value structure for exercise 13.1.d (above) and its "opposite", i.e., get the movies in which a given actor is cast? Why or why not?
+b. The Internet Movie Database (imdb.com) is currently implemented in mySQL. If you were required to port it to a noSQL system,
+    which of the noSQL system types would you suggest? Explain your answer.
+
+    - If I would have to move the imdb.com database to a noSQL system, I think using a document noSQL database would be the best option. According
+    to our reading guide, document databases provide a rich query language and constructs such as databases indexes, which would allow for an
+    easier transition from relational databases to the noSQL system. The documents don't all have to be the exact same either, which may come in
+    handy when moving data of movies where they might not have all the exact same type or amount of information for each movie.
+
+c. Could you (efficiently) reuse the same key-value structure for exercise 13.1.d (above) and its "opposite", i.e., get the movies in which a
+    given actor is cast? Why or why not?
+
+    - I think the way in which I implemented the key-value structure necessary for exercise 13.1.d would not be able to be reused in order to
+    get the movies in which a given actor is cast. I could probably implement this by simply switching the movieId and the actorId in the key structure
+    so that it would look like /role/{actorId}/-/{roleName}/{movieId} and this key structure would allow me to do the opposite query of 13.1.d.
 
 d. NoSQL databases are often referred to as schema-less or schema-free. Explain what this means using examples from your homework solution.
+
+    - Schema-less or schema-free could mean that a developer does not have to specify a specific schema before entering in the data and sticking to that
+    schema for all records of that data type when entering data. Instead, like in this homework, the developer can choose a way in which to store the
+    data that makes sense for one kind of query. The way in which I stored the role table records is a little odd, but it helped me with the queries that
+    we needed to run. The same data can get stored in many "key patterns" depending on the kind of query is going to be run.

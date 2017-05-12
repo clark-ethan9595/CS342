@@ -1,11 +1,14 @@
 <component name="ProjectDictionaryState">
   <dictionary name="elc3">
     <words>
+      <w>actorfirst</w>
+      <w>actorlast</w>
       <w>bjarne</w>
       <w>fullname</w>
       <w>imdb</w>
       <w>kvstore</w>
       <w>listofyears</w>
+      <w>multiget</w>
     </words>
   </dictionary>
 </component>

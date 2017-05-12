@@ -5,6 +5,12 @@ import java.util.*;
 
 /** GetSortedMovies list all the movies in order of year
  *
+ * This query gets all the records with /movie/ as part of the major key and stores all information in two structures.
+ *      I store all the years of movies in a List<String> and I stored all movie information in a HashMap<String, List<List<String>>.
+ *      The key of the HashMap is the movie year and then the value is a list of lists of strings in the pair (movieId, movieName).
+ *
+ * See LoadDB.java for more information on how the records are stored for the movies table.
+ *
  * Written by: Ethan Clark
  * Homework 13 - CS342
  * Date: May 10, 2017
@@ -56,6 +62,7 @@ public class GetSortedMovies {
         store.close();
     }
 
+    // Function to get the name of the movie from a given movieId
     public static String getNameOfMovie(String movieId, KVStore store) {
         String temp = "";
         Key majorKeyPath = Key.createKey(Arrays.asList("movie", movieId));

@@ -34,6 +34,20 @@ public class LoadDB {
         store.close();
     }
 
+    /**
+     * getMovies has the following key-value structure for storing movies:
+     *      /movie/{id}/-/name/{movieName}
+     *      /movie/{id}/-/year/{movieYear}
+     *      /movie/{id}/-/rank/{movieRank}
+     *
+     * This key-value structure will allow me to query all the values for a given movie (GetTableValues)
+     *       by using a multiGet on /movie/{given id}. Then it may not be ideal for sorting
+     *       all the movies in the database by year, but I made it work (GetSortedMovies), by reading in
+     *       all records with /movie/ and then checking if the first part of the minor key was year and storing
+     *       that information in a HashMap of (String, List<List<String>>).
+     *
+     * @throws SQLException
+     */
     public static void getMovies() throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
@@ -63,6 +77,16 @@ public class LoadDB {
         jdbcStatement.close();
     }
 
+    /**
+     * getActors has the following key-value structure for storing the actors:
+     *      /actor/{id}/-/firstName/{actorfirstName}
+     *      /actor/{id}/-/lastName/{actorlastName}
+     *
+     * This key value structure allows to get the first and the last name from a given record by doing
+     *      a multiget on /actor/{givenId} for whenever we need the first and last name of an actor (GetMovieActors).
+     *
+     * @throws SQLException
+     */
     public static void getActors() throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
@@ -84,6 +108,18 @@ public class LoadDB {
         jdbcStatement.close();
     }
 
+    /**
+     * getRoles has the following key-value structure for storing the role table records:
+     *      /role/{movieId}/-/{roleName}/{actorId}
+     *
+     * After getting a lot of help/advice on how to get this work, I think this structure works the best
+     *      for both GetMovieActorRoles and GetMovieActors. I can do a multiget on /role/{given movieId} and compare
+     *      the given actorId for GetMovieActorRoles to the second part of the minor key to see if that actor is the one
+     *      I want and I can get all roles for GetMovieActors by doing a multiget on /role/{given movieId} and going through
+     *      all those records to get all the roles for a given movie.
+     *
+     * @throws SQLException
+     */
     public static void getRoles() throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();

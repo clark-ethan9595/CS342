@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 /** GetMovieActors gets the actors if any, who are cast in a given movie
  *
+ * See LoadDB.java to see more information on how the records are stored for the role table and the actor table.
+ *
  * Written by: Ethan Clark
  * Homework 13 - CS342
  * Date: May 10, 2017
@@ -35,6 +37,7 @@ public class GetMovieActors {
         store.close();
     }
 
+    // Function to get the first and last name of an actor from their actorId
     public static String getNamesOfActor(String actorId, KVStore store) {
         String fullname = "";
         Key majorKeyPath = Key.createKey(Arrays.asList("actor", actorId));

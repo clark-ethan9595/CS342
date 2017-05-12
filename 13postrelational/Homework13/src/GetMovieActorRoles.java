@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 /** GetMovieActorRoles gets the roles, if any, for which a given actor is cast in a given movie
  *
+ * See LoadDB.java for more information on how data is stored for the role table records.
+ *
  * Written by: Ethan Clark
  * Homework 13 - CS342
  * Date: May 10, 2017
