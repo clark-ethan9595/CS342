@@ -1,8 +1,8 @@
-import oracle.kv.KVStore;
-import oracle.kv.KVStoreConfig;
-import oracle.kv.KVStoreFactory;
+import oracle.kv.*;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
 
 /** GetMovieActors gets the actors if any, who are cast in a given movie
@@ -23,6 +23,25 @@ public class GetMovieActors {
 
         System.out.println("Movie ID: " + movieId);
 
+        Key majorKeyPath = Key.createKey(Arrays.asList("role", movieId.toString()));
+
+        Map<Key, ValueVersion> fields = store.multiGet(majorKeyPath, null, null);
+        for (Map.Entry<Key, ValueVersion> field : fields.entrySet()) {
+            String roleName = field.getKey().getMinorPath().get(0);
+            String actorId = new String(field.getValue().getValue().getValue());
+            System.out.println("\t" + actorId + "\t" + getNamesOfActor(actorId, store) + "\t" + roleName);
+        }
+
         store.close();
+    }
+
+    public static String getNamesOfActor(String actorId, KVStore store) {
+        String fullname = "";
+        Key majorKeyPath = Key.createKey(Arrays.asList("actor", actorId));
+        Map<Key, ValueVersion> fields = store.multiGet(majorKeyPath, null, null);
+        for (Map.Entry<Key, ValueVersion> field : fields.entrySet()) {
+            fullname += " " + new String(field.getValue().getValue().getValue());
+        }
+        return fullname;
     }
 }

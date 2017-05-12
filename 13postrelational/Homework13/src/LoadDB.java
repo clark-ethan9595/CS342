@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * LoadDB.java loads in the data from the Actor, Movie, and Role table from the IMDB database in OracleXE
@@ -87,16 +88,17 @@ public class LoadDB {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
         ResultSet resultSet = jdbcStatement.executeQuery("SELECT actorId, movieId, role FROM Role");
-        Integer i = 0;
 
         while (resultSet.next()) {
-            Key actorKey = Key.createKey(Arrays.asList("role", resultSet.getString(1), resultSet.getString(2)), Arrays.asList("name"));
-            Value roleValue = Value.createValue(resultSet.getString(3).getBytes());
-            store.put(actorKey, roleValue);
-            if (i < 10) {
-                String result = new String(store.get(actorKey).getValue().getValue());
-                System.out.println(actorKey.toString() + " : " + result);
-                i++;
+            Key key = Key.createKey(Arrays.asList("role", resultSet.getString(2)), Arrays.asList(resultSet.getString(3)));
+            Value value = Value.createValue(resultSet.getString(1).getBytes());
+            store.put(key, value);
+
+            Map<Key, ValueVersion> fields = store.multiGet(key, null, null);
+            for (Map.Entry<Key, ValueVersion> field : fields.entrySet()) {
+                String fieldName = field.getKey().getMinorPath().get(0);
+                String fieldValue = new String(field.getValue().getValue().getValue());
+                System.out.println("\t" + fieldName + "\t" + fieldValue);
             }
         }
 

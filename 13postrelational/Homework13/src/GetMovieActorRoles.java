@@ -2,7 +2,6 @@ import oracle.kv.*;
 
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -27,20 +26,16 @@ public class GetMovieActorRoles {
         System.out.println("\nMovie ID: " + movieId);
         System.out.println("Actor ID: " + actorId);
 
-        Key majorKeyPath = Key.createKey(Arrays.asList("role", actorId.toString(), movieId.toString()));
+        Key majorKeyPath = Key.createKey(Arrays.asList("role", movieId.toString()));
 
-        Iterator<KeyValueVersion> i = store.storeIterator(Direction.UNORDERED, 0, majorKeyPath, null, null);
-        while (i.hasNext()) {
-            String role = new String(i.next().getValue().getValue());
-            System.out.println("\t" + role);
-            System.out.println("HELLO");
+        Map<Key, ValueVersion> fields = store.multiGet(majorKeyPath, null, null);
+        for (Map.Entry<Key, ValueVersion> field : fields.entrySet()) {
+            String roleName = field.getKey().getMinorPath().get(0);
+            String actorIdValue = new String(field.getValue().getValue().getValue());
+            if (actorIdValue.equals(actorId.toString())) {
+                System.out.println("\t" + roleName);
+            }
         }
-
-//        Map<Key, ValueVersion> fields = store.multiGet(majorKeyPath, null, null);
-//        for (Map.Entry<Key, ValueVersion> field : fields.entrySet()) {
-//            String roleName = new String(field.getValue().getValue().getValue());
-//            System.out.println("\t" + roleName);
-//        }
 
         store.close();
     }
