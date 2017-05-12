@@ -2,6 +2,11 @@ Key Accomplishments for J2EE Part of Final Project
 Ethan Clark
 CS 342
 
+The information that I serve up can be found below and it is useful for application developers using this webservice
+	because it basically gives all the most important information regarding the data tables stored in Oracle. An app
+	developer can access athletes, schools, fantasyTeams, Users, and Leagues and they can create/modify/delete any/all
+	of those things in the database.
+
 The Athlete table has a OneToMany relationship with School.
     This means that the information for an athlete's school will appear in their JSON object along with
     the rest of the Athlete information.
