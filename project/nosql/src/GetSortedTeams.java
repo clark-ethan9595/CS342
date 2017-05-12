@@ -6,6 +6,10 @@ import java.util.*;
 /**
  * GetSortedTeams.java sorts all the FantasyTeams in the database based on number of wins
  *
+ * See miaaFantasy.java for more information regarding the key-value structure for the Team table
+ *
+ * This is a useful, ordered list
+ *
  * Author: Ethan Clark (elc3)
  * Date: May 12, 2017
  */
@@ -15,7 +19,7 @@ public class GetSortedTeams {
         KVStore store = KVStoreFactory.getStore(new KVStoreConfig("kvstore", "localhost:5000"));
 
         HashMap<String, List<List<String>>> teams = new HashMap<>();
-        List<String> listofwins = new ArrayList<>();
+        SortedSet<Integer> ints = new TreeSet<>();
 
         Key key = Key.createKey(Arrays.asList("team"));
         Iterator<KeyValueVersion> it = store.storeIterator(Direction.UNORDERED, 0, key, null, null);
@@ -28,8 +32,8 @@ public class GetSortedTeams {
                 String wins = new String(kv.getValue().getValue());
                 currentTeam.add(teamId);
                 currentTeam.add(getNameOfTeam(teamId, store));
-                if (!listofwins.contains(wins)) {
-                    listofwins.add(wins);
+                if (!ints.contains(Integer.parseInt(wins))) {
+                    ints.add(Integer.parseInt(wins));
                 }
                 if (teams.containsKey(wins)) {
                     teams.get(wins).add(currentTeam);
@@ -41,10 +45,8 @@ public class GetSortedTeams {
             }
         }
 
-        Collections.sort(listofwins);
-
-        for (String win : listofwins) {
-            for (List<String> teamInfo : teams.get(win)) {
+        for (Integer win : ints) {
+            for (List<String> teamInfo : teams.get(win.toString())) {
                 System.out.print(win + "\t");
                 for (String data : teamInfo) {
                     System.out.print(data + "\t");
@@ -56,6 +58,7 @@ public class GetSortedTeams {
         store.close();
     }
 
+    // Function to get the teamName of a team from their teamId
     public static String getNameOfTeam(String teamId, KVStore store) {
         String temp = "";
         Key majorKeyPath = Key.createKey(Arrays.asList("team", teamId));

@@ -8,6 +8,10 @@ import java.util.Scanner;
 /**
  * GetAthleteValues gets all the data stored for an athlete based on user input of athleteId
  *
+ * See miaaFantasy.java for more information regarding the key-value structure for the Athlete table
+ *
+ * This is a useful, one-table get all information
+ *
  * Author: Ethan Clark
  * Date: May 12, 2017
  */

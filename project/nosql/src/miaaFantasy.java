@@ -5,6 +5,12 @@
  * Project Extensions Checkpoint
  *
  * NoSQL version of some of my final project tables
+ *
+ * I think that for my database, this key-value system of KVLite is okay for storing my database application. Potentially I think
+ *      that a document noSQL database type might be a little bit better because documents do not have to have the same exact
+ *      information in each one, so I think that may come in handy a little bit. But, other than that, I think that the key-value
+ *      structure works fine for storing tables like Athlete and Team that store its information, but are very tricky to work with
+ *      for the Athlete_Team table that implements the many-to-many relationship between Athlete and Team.
  */
 
 import oracle.kv.*;
@@ -38,6 +44,20 @@ public class miaaFantasy {
 
     }
 
+    /**
+     * getAthletes has the following key-value structure for storing athletes:
+     *      /athlete/{athleteId}/-/firstName/{firstName}
+     *      /athlete/{athleteId}/-/lastName/{lastName}
+     *      /athlete/{athleteId}/-/city/{city}
+     *      /athlete/{athleteId}/-/state/{state}
+     *      /athlete/{athleteId}/-/position/{position
+     *
+     * This key-value structure will allow me to get all the information for a given athlete at any time I want.
+     *      I use this key-value structure to query to get all information for one specific athlete (getAthleteValues)
+     *      and for getting the first and last name for a specific athlete (getTeamAthletes).
+     *
+     * @throws SQLException
+     */
     public static void getAthletes() throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
@@ -72,6 +92,18 @@ public class miaaFantasy {
         jdbcStatement.close();
     }
 
+    /**
+     * getTeams has the following the key-value structure for storing fantasy teams:
+     *      /team/{teamId}/-/teamName/{teamName}
+     *      /team/{teamId}/-/wins/{wins}
+     *      /team/{teamId}/-/losses/{losses}
+     *      /team/{teamId}/-/ties/{ties}
+     *
+     * This key-value structure will allow me to get the necessary information needed for sorting all the team
+     *      records by number of wins (GetSortedTeams).
+     *
+     * @throws SQLException
+     */
     public static void getTeams() throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
@@ -102,6 +134,17 @@ public class miaaFantasy {
         jdbcStatement.close();
     }
 
+    /**
+     * getAthleteTeam has the following key-value structure for storing the Athlete_Team records
+     *      /athleteTeam/{teamId}/-/athlete/{athleteId}
+     *
+     * This key-value structure is not working quite yet. I cannot get the GetTeamAthletes to show all of the athletes
+     *      on a given fantasy team. I think it has to do with the storing of these records is somehow overwriting some
+     *      of the early records that get stored because I can only get about 20 or so records with a multiGet on
+     *      /athleteTeam/ major key. I will work on this more to finish it up by the final project due date.
+     *
+     * @throws SQLException
+     */
     public static void getAthleteTeam() throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
