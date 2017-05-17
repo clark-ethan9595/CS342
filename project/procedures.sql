@@ -21,7 +21,18 @@ CREATE OR REPLACE PROCEDURE tradePlayers (teamOneId IN INTEGER, athleteOneId IN 
 	teamOne INTEGER;
 	teamTwo INTEGER;
 	counter INTEGER;
+	wrongTeamOneException EXCEPTION;
+	wrongTeamTwoException EXCEPTION;
+	
 BEGIN
+
+	-- Create a savepoint to jump back to if needed and lock the Atlete_Team table
+	SAVEPOINT temp;
+	LOCK TABLE Athlete_Team IN EXCLUSIVE MODE NOWAIT;
+	
+	-- Just in case a user tries to modify/delete an athlete or a team during this transaction
+	LOCK TABLE Athlete IN EXCLUSIVE MODE NOWAIT;
+	LOCK TABLE Team IN EXCLUSIVE MODE NOWAIT;
 
 	-- Get the counts to check if both athletes and both teams actually exist in the database
 	SELECT COUNT(*) INTO athleteOne FROM Athlete WHERE athleteId = athleteOneId;
@@ -51,17 +62,17 @@ BEGIN
 		-- See if athleteOneId is on teamOneId
 		SELECT COUNT(*) INTO counter FROM Athlete_Team WHERE teamId = teamOneId AND athleteId = athleteOneId;
 	
-		-- If athleteOneId is not actually on teamOneId, raise an application error
+		-- If athleteOneId is not actually on teamOneId, raise error
 		IF counter = 0 THEN	
-			RAISE_APPLICATION_ERROR(-20000, 'Athlete ' || athleteOneId || ' is not on Fantasy Team ' || teamOneId);
+			RAISE wrongTeamOneException;
 		END IF;
 	
 		-- See if athleteTwoId is on teamTwoId
 		SELECT COUNT(*) INTO counter FROM Athlete_Team WHERE teamId = teamTwoId AND athleteId = athleteTwoId;
 	
-		-- If athleteTwoId is not actually on teamTwoId, raise an application error
+		-- If athleteTwoId is not actually on teamTwoId, raise error
 		IF counter = 0 THEN
-			RAISE_APPLICATION_ERROR(-20000, 'Athlete ' || athleteTwoId || ' is not on Fantasy Team ' || teamTwoId);
+			RAISE wrongTeamTwoException;
 		END IF;
 		
 		-- Remove both players from their original teams
@@ -73,6 +84,28 @@ BEGIN
 		INSERT INTO Athlete_Team VALUES (teamTwoId, athleteOneId);
 		
 	END IF;
+	
+	-- Commit the transaction
+	COMMIT;
+	
+	EXCEPTION
+	
+		-- When athleteOneId is not actually on teamTwoId
+		WHEN wrongTeamOneException THEN
+			RAISE_APPLICATION_ERROR(-20000, 'Athlete ' || athleteOneId || ' is not on Fantasy Team ' || teamOneId);
+			-- Rollback to the savepoint from the beginning of the procedure
+			ROLLBACK TO temp;
+			
+		-- When athleteTwoId is not actually on teamTwoId
+		WHEN wrongTeamTwoException THEN
+			RAISE_APPLICATION_ERROR(-20000, 'Athlete ' || athleteTwoId || ' is not on Fantasy Team ' || teamTwoId);
+			-- Rollback to the savepoint at the beginning of the procedure
+			ROLLBACK TO temp;
+			
+		-- In the case of some unforeseen exception
+		WHEN OTHERS THEN
+			dbms_output.put_line("Unknown error as occurred... Rolling back to savepoint");
+			ROLLBACK TO temp;
 
 END;
 /

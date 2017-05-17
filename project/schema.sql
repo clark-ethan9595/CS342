@@ -20,7 +20,8 @@ CREATE TABLE Athlete (
 	grade varchar(10),
 	position varchar(10),
 	schoolId integer,
-	FOREIGN KEY (schoolId) REFERENCES School(schoolId) ON DELETE CASCADE
+	FOREIGN KEY (schoolId) REFERENCES School(schoolId) ON DELETE CASCADE,
+	CHECK (GPA <= 4.00 AND GPA >= 0.00)
 );
 
 -- If a School gets deleted from the database, then I think a Game should be set to NULL because
@@ -60,7 +61,10 @@ CREATE TABLE Team (
 	userId integer,
 	leagueId integer,
 	FOREIGN KEY (userId) REFERENCES Users(userId) ON DELETE CASCADE,
-	FOREIGN KEY (leagueId) REFERENCES League(leagueId) ON DELETE SET NULL
+	FOREIGN KEY (leagueId) REFERENCES League(leagueId) ON DELETE SET NULL,
+	CHECK (wins >= 0),
+	CHECK (losses >= 0),
+	CHECK (ties >= 0)
 );
 
 -- If an Athlete is deleted from the database, then the record of the Athlete being on a given Team
@@ -91,5 +95,11 @@ CREATE TABLE Athlete_Game (
 	turnovers integer,
 	PRIMARY KEY (gameId, athleteId),
 	FOREIGN KEY (gameId) REFERENCES Game(gameId) ON DELETE CASCADE,
-	FOREIGN KEY (athleteId) REFERENCES Athlete(athleteId) ON DELETE CASCADE
+	FOREIGN KEY (athleteId) REFERENCES Athlete(athleteId) ON DELETE CASCADE,
+	CHECK (points >= 0),
+	CHECK (rebounds >= 0),
+	CHECK (assists >= 0),
+	CHECK (steals >= 0),
+	CHECK (blocks >= 0),
+	CHECK (turnovers >= 0)
 );
