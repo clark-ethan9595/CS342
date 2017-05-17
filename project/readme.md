@@ -5,8 +5,7 @@ Spring 2017
 To gain access to this database, log in to Oracle using system account, run the create.sql file,
 	and the user miaaFantasy will be created with access to this database.
 
-******* See Vision.txt for the additional features added for the final project deliverable. ********
-[Link to vision.txt](../../blob/master/project/vision.txt)
+******* See [vision.txt](../../../blob/master/project/vision.txt) for the additional features added for the final project deliverable. ********
 
 Previous Project Deliverable Comments Addressed
 
