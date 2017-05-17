@@ -9,6 +9,10 @@ To gain access to this database, log in to Oracle using system account, run the 
 
 Previous Project Deliverable Comments Addressed
 
+	Project 1
+		- Updated vision statement to reflect all the changes throughout the semester
+			- Includes additional features added for final project deliverable
+
 	Project 2
 		- Updated ERD to remove the particpates relationship from Users and League.
 		- Addressed missing domain contraints on scores and counts as well as foreign keys.
