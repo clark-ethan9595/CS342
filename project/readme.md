@@ -32,10 +32,8 @@ Previous Project Deliverable Comments Addressed
 		- Added query that combines inner and outer joins.
 		
 	Project 4
-		- Implemented a proper transaction in my stored procedure with savepoint, lock, commit,
-			and rollback.
-			- Added EXCEPTION section to catch the raised exceptions and included a WHEN OTHERS
-				THEN catch
+		- Implemented a proper transaction in my stored procedure with savepoint, lock, commit, and rollback.
+			- Added EXCEPTION section to catch the raised exceptions and included a WHEN OTHERS THEN catch.
 		- DataPump Loader instructions can be found in readme.txt in the DataPump subdirectory.
 		
 	Project 5
