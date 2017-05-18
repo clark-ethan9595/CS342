@@ -30,11 +30,10 @@ public class GetTeamAthletes {
         Key majorKeyPath = Key.createKey(Arrays.asList("athleteTeam", teamId.toString()));
         Iterator<KeyValueVersion> it = store.storeIterator(Direction.UNORDERED, 0, majorKeyPath, null, null);
 
-        Map<Key, ValueVersion> fields = store.multiGet(majorKeyPath, null, null);
-        for (Map.Entry<Key, ValueVersion> field : fields.entrySet()) {
-            String athlete = field.getKey().getMinorPath().get(0);
-            String athleteId = new String(field.getValue().getValue().getValue());
-            System.out.println("\t" + athleteId + "\t" + getNamesofAthlete(athleteId, store) + "\t" + athlete);
+        while (it.hasNext()) {
+            KeyValueVersion kv = it.next();
+            String athleteId = kv.getKey().getMajorPath().get(2);
+            System.out.println("\t" + athleteId + "\t" + getNamesofAthlete(athleteId, store));
         }
 
         store.close();

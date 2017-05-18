@@ -2,10 +2,12 @@ CS342 Final Project - MIAA Fantasy Database
 Ethan Clark
 Spring 2017
 
-To gain access to this database, log in to Oracle using system account, run the create.sql file,
-	and the user miaaFantasy will be created with access to this database.
+To gain access to this database, log in to Oracle using system account, run the create.sql script file,
+	and the user miaaFantasy will be created with access to this database. The create.sql script file calls
+	load.sql, which calls drop.sql, schema.sql and data.sql. You can load in the procedure and the triggers
+	through the procedures.sql and triggers.sql script files. Various example queries can be found in queries.sql.
 
-******* See [vision.txt](../../../blob/master/project/vision.txt) for the additional features added for the final project deliverable. ********
+******* See [vision.txt](../../../blob/master/project/vision.txt) for additional features added for the final project deliverable. ********
 
 Previous Project Deliverable Comments Addressed
 

@@ -26,12 +26,14 @@ getTeams has the following the key-value structure for storing fantasy teams:
       /team/{teamId}/-/wins/{wins}
       /team/{teamId}/-/losses/{losses}
       /team/{teamId}/-/ties/{ties}
-This key-value structure will allow me to get the necessary information needed for sorting all the team
-      records by number of wins (GetSortedTeams).
+      /wins/-/{wins}/{teamId}/NO-VALUE
+This key-value structure will allow me to get the necessary information needed to display all the information
+    for a given team. The last key-value structure will allow me to sort by wins using a multi-get.
 
 /*****************ATHLETE_TEAM TABLE***********************/
 getAthleteTeam has the following key-value structure for storing the Athlete_Team records
-      /athleteTeam/{teamId}/-/athlete/{athleteId}
- This key-value structure is not working quite yet. I cannot get the GetTeamAthletes to show all of the athletes
-      on a given fantasy team. I think it has to do with the storing of these records is somehow overwriting some
-      /athleteTeam/ major key. I will work on this more to finish it up by the final project due date.
+      /athleteTeam/{teamId}/{athleteId}/-/NO-VALUE
+This key-value structure allows me to use storeIterator to get all the athletes that are on a given
+      fantasyTeam given the team id. This one took me a while to figure out and I'm not exactly sure why
+      my previous key-value structuring wasn't working, but creating it so that this key structure contains
+      a no-value (or a NULL value) works great to get all the athletes for a given fantasy team.

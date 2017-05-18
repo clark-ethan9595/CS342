@@ -55,6 +55,43 @@ public class GetSortedTeams {
             }
         }
 
+        /*
+         * I stored a key-value structure as follows to have the store do the sorting for me:
+         *      /wins/-/{wins}/{teamId}/NO-VALUE.
+         * But for some reason, the KVStore does not compare well with strings that have more than one digit.
+         *      The following produces this outcome:
+         *          0	21	Drop It Like Its Hot
+	     *          1	11	Green Scorpions
+         *          1	19	Dunkaroo
+         *          1	3	The Bright Angels
+         *          1	6	The Bold Storm
+         *          11	18	Doctor J
+         *          11	20	Pistons
+         *          13	13	The Zonked Tigers
+         *          16	7	Basic Ballers
+         *          18	15	Team Ball So Hard
+         *          18	2	The Magic Lobsters
+         *          18	5	The Flawless Wings
+         *          19	16	McBuckets
+         *          19	8	Extreme Panthers
+         *          20	1	The United Falcons
+         *          20	10	Michigan Wild
+         *          6	4	What Am I Doing
+         *          7	14	The Lonely Rabbits
+         *          7	9	American Sonics
+         *          8	12	The Pricey Pandas
+         *          8	17	The GOAT
+         * So for whatever reason, the sorting by wins does not work with the following accessing of the team information.
+         */
+        Key yearPath = Key.createKey(Arrays.asList("wins"));
+        Map<Key, ValueVersion> fields = store.multiGet(yearPath, null, null);
+
+        for (Map.Entry<Key, ValueVersion> field : fields.entrySet()) {
+            String wins = field.getKey().getMinorPath().get(0);
+            String teamId = field.getKey().getMinorPath().get(1);
+            System.out.println("\t" + wins + "\t" + teamId + "\t" + getNameOfTeam(teamId, store));
+        }
+
         store.close();
     }
 

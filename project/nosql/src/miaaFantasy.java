@@ -99,8 +99,13 @@ public class miaaFantasy {
      *      /team/{teamId}/-/losses/{losses}
      *      /team/{teamId}/-/ties/{ties}
      *
-     * This key-value structure will allow me to get the necessary information needed for sorting all the team
-     *      records by number of wins (GetSortedTeams).
+     * I also store this key-value structure for getting the fantasy teams ordered by wins:
+     *      /wins/-/{wins}/{teamId}/NO-VALUE
+     *      but for whatever reason, it does not work well when comparing strings with more than one digit. Therefore
+     *      I kept the original way I sorted by wins in the GetSortedTeams.java still.
+     *
+     * This key-value structure will allow me to get the necessary information needed for getting a specific team
+     *      based on the team's id.
      *
      * @throws SQLException
      */
@@ -128,6 +133,10 @@ public class miaaFantasy {
             Key tiesKey = Key.createKey(Arrays.asList("team", teamId.toString()), Arrays.asList("ties"));
             Value tiesValue = Value.createValue(resultSet.getString(5).getBytes());
             store.put(tiesKey, tiesValue);
+
+            Key orderedKey = Key.createKey(Arrays.asList("wins"), Arrays.asList(resultSet.getString(3), teamId.toString()));
+            Value orderedValue = Value.createValue(new byte[0]);
+            store.put(orderedKey, orderedValue);
         }
 
         resultSet.close();
@@ -136,12 +145,12 @@ public class miaaFantasy {
 
     /**
      * getAthleteTeam has the following key-value structure for storing the Athlete_Team records
-     *      /athleteTeam/{teamId}/-/athlete/{athleteId}
+     *      /athleteTeam/{teamId}/{athleteId}/-/NO-VALUE
      *
-     * This key-value structure is not working quite yet. I cannot get the GetTeamAthletes to show all of the athletes
-     *      on a given fantasy team. I think it has to do with the storing of these records is somehow overwriting some
-     *      of the early records that get stored because I can only get about 20 or so records with a multiGet on
-     *      /athleteTeam/ major key. I will work on this more to finish it up by the final project due date.
+     * This key-value structure allows me to use storeIterator to get all the athletes that are on a given
+     *      fantasyTeam given the team id. This one took me a while to figure out and I'm not exactly sure why
+     *      my previous key-value structuring wasn't working, but creating it so that this key structure contains
+     *      a no-value (or a NULL value) works great to get all the athletes for a given fantasy team.
      *
      * @throws SQLException
      */
@@ -152,8 +161,8 @@ public class miaaFantasy {
 
         while (resultSet.next()) {
 
-            Key key = Key.createKey(Arrays.asList("athleteTeam", resultSet.getString(1)), Arrays.asList("athlete"));
-            Value value = Value.createValue(resultSet.getString(2).getBytes());
+            Key key = Key.createKey(Arrays.asList("athleteTeam", resultSet.getString(1), resultSet.getString(2)));
+            Value value = Value.createValue(new byte[0]);
             store.put(key, value);
         }
     }

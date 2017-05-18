@@ -26,6 +26,16 @@ Spring 2017
 	to load the data using Intellij IDE, and nosql contains a project that loads the data into Oracle's nosql database KVLite.
 	
 Additional Features for Final Project Deliverable
+
 		- In my stored procedure, I lock the Athlete and Team tables as well because I thought of the case where a
 		user tries to either modify or delete a Team record or an Athlete record during the tradePlayers
 		transaction. This additional feature was talked about with Professor Vander Linden in his office.
+		
+		- I added a key-value structure in my noSQL project under the team table to hopefully help with sorting
+		the fantasy teams by number of wins (as described by Professor Vander Linden on how to sort by year in the
+		movie noSQL database from Homework13). Unfortunately, I think the KVStore has some issues comparing integers
+		stored as strings that have different number of digits, so the outcome is not what it should be. See the miaaFantasy.java
+		file in my noSQL project for more information.
+		
+		- I created another query in my noSQL project called getTeamValues that gets all the information regarding a
+		given team id from user input (very similar to my getAthleteValues query).
